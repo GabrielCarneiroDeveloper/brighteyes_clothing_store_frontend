@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "start": "node index.js"
+    "start": "npm install && node index.js"
   },
   "private": true,
   "dependencies": {
