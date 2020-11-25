@@ -3,7 +3,7 @@ const app = express();
 const path = require('path');
 const fs = require('fs');
 
-const port = process.env.NODE_PORT || 4200;
+const port = process.env.PORT || 4200;
 
 const root = path.join(__dirname, 'dist', 'frontend');
 
