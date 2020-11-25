@@ -1,0 +1,50 @@
+<section >
+  <h2>Shopping Cart list</h2>
+
+  <table
+    class="table table-responsive">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Client</th>
+          <th scope="col">Seller</th>
+          <th scope="col">Cashier</th>
+          <th scope="col">Status</th>
+          <th scope="col">Clothes List</th>
+          <th scope="col">Created at</th>
+          <th scope="col">Updated at</th>
+          <th scope="col">Total Cost</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let object of shoppingCartList$ | async">
+        <tr>
+          <th scope="row">{{ object.id }}</th>
+          <td>{{ object.client.name }}</td>
+          <td>{{ object.seller.name }}</td>
+          <td>{{ object.cashier?.name }}</td>
+          <td>{{ object.status.name }}</td>
+          <td>
+            <app-shopping-cart-modal
+              (addClothes)="addClothes($event)"
+              (removeClothes)="removeClothes($event)"
+              [shoppingCart]="object"
+            ></app-shopping-cart-modal>
+          </td>
+          <td>{{ parseDate(object.createdAt) }}</td>
+          <td>{{ parseDate(object.updatedAt) }}</td>
+          <td>{{ totalValue(object?.clothes) }}</td>
+          <td>
+            <div>
+              <button 
+                (click)='updateButtonClicked(object)' 
+                class="btn btn-primary">Update
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+  </table>
+
+
+</section>

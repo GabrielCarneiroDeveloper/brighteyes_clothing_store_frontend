@@ -1,0 +1,274 @@
+<section>
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Employee Form</h2>
+    </div>
+    <div class="col-md-6 pull-right">
+      <h2>
+        {{ isUpdating ? "Update" : "Create" }}
+      </h2>
+    </div>
+  </div>
+
+  <form 
+    [formGroup]="formGroup" 
+    (submit)="sendEmployee()"
+    id="employee-form" 
+  >
+    <div class="row">
+      <div class="form-group col-md-6">
+
+        <label for="name" class="col-form-label">Name</label>
+        <input
+          [ngClass]='[isValid("name")]'
+          formControlName="name"
+          type="text"
+          class="form-control"
+          id="name"
+          placeholder="Fulano e Sicrano"/>
+
+        <!-- invalid data feedback -->
+        <div 
+          class="invalid-feedback" 
+          *ngIf='showInvalidFeedback("name"); else validFeedbackName'>
+            <span *ngIf='formGroup.get("name").errors?.required'>Name is required</span>
+        </div>
+
+        <!-- valid data feedback -->
+        <ng-template #validFeedbackName>
+          <div 
+            class="valid-feedback" 
+            *ngIf='!showInvalidFeedback("name")'>
+              <small>ok</small>
+          </div>
+        </ng-template>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="birthdate" class="col-form-label">Birthdate</label>
+        <!-- <input
+          [ngClass]='isValid("birthdate")'
+          formControlName="birthdate"
+          type="date"
+          class="form-control"
+          id="birthdate"/> -->
+        <input
+          formControlName="birthdate"
+          class="form-control"
+          id="birthdate"
+          placeholder="12/12/1212"
+          [ngClass]='[isValid("birthdate")]'/>
+
+        <!-- invalid data feedback -->
+        <div 
+          class="invalid-feedback" 
+          *ngIf='showInvalidFeedback("birthdate"); else validFeedbackBirthdate'>
+            <span *ngIf='formGroup.get("birthdate").errors?.required'>Birthdate is required</span>
+            <span *ngIf='formGroup.get("birthdate").errors?.pattern'>Birthdate is invalid</span>
+        </div>
+
+        <!-- valid data feedback -->
+        <ng-template #validFeedbackBirthdate>
+          <div 
+            class="valid-feedback" 
+            *ngIf='!showInvalidFeedback("birthdate")'>
+              <small>ok</small>
+          </div>
+        </ng-template>
+
+      </div>
+    </div>
+
+    <div class="form-group d-none">
+      <input formControlName="id" type="text" class="form-control" id="id" />
+    </div>
+
+    <div class="form-group">
+      <label for="staticEmail" class="col-form-label">Email</label>
+      <input
+        [ngClass]='isValid("email")'
+        formControlName="email"
+        type="text"
+        class="form-control"
+        id="staticEmail"
+        placeholder="asdf@example.com"
+      />
+
+        <!-- invalid data feedback -->
+        <div 
+          class="invalid-feedback" 
+          *ngIf='showInvalidFeedback("email"); else validFeedbackEmail'
+        >
+          <span *ngIf='formGroup.get("email").errors?.required'>Email is required</span>
+          <span *ngIf='formGroup.get("email").errors?.email'>Invalid e-mail</span>
+        </div>
+
+        <!-- valid data feedback -->
+        <ng-template #validFeedbackEmail>
+          <div 
+            class="valid-feedback" 
+            *ngIf='!showInvalidFeedback("email")'
+          >
+            <small>ok</small>
+          </div>
+        </ng-template>
+
+    </div>
+
+    <div *ngIf="!isUpdating" class="form-group">
+      <label for="inputPassword" class="col-form-label">Password</label>
+      <input
+        [ngClass]='isValid("password")'
+        formControlName="password"
+        type="password"
+        class="form-control"
+        id="inputPassword"
+        placeholder="******"
+      />
+
+        <!-- invalid data feedback -->
+        <div 
+          class="invalid-feedback" 
+          *ngIf='showInvalidFeedback("password"); else validFeedbackPassword'
+        >
+          <span *ngIf='formGroup.get("password").errors?.required'>Password is required</span>
+        </div>
+
+        <!-- valid data feedback -->
+        <ng-template #validFeedbackPassword>
+          <div 
+            class="valid-feedback" 
+            *ngIf='!showInvalidFeedback("password")'
+          >
+            <small>ok</small>
+          </div>
+        </ng-template>
+
+    </div>
+
+    <div class="form-group">
+      <label for="title" class="col-form-label">Employee Title</label>
+      <select
+        [ngClass]='isValid("title")'
+        formControlName="title"
+        name="title"
+        class="form-control"
+        style="height: 2em"
+      >
+        <option
+          *ngFor="let title of employeeTitleList | async as list"
+          [ngValue]="title.id"
+        >
+          {{ title.name }}
+        </option>
+      </select>
+
+
+      <!-- invalid data feedback -->
+      <div 
+        class="invalid-feedback" 
+        *ngIf='showInvalidFeedback("title"); else validFeedbackTitle'
+      >
+        <span *ngIf='formGroup.get("title").errors?.required'>Title is required</span>
+      </div>
+
+      <!-- valid data feedback -->
+      <ng-template #validFeedbackTitle>
+        <div 
+          class="valid-feedback" 
+          *ngIf='!showInvalidFeedback("title")'
+        >
+          <small>ok</small>
+        </div>
+      </ng-template>
+
+    </div>
+
+    <div class="form-group">
+      <label for="status" class="col-form-label">Status</label>
+      <select
+        [ngClass]='isValid("status")'
+        formControlName="status"
+        name="status"
+        id="status"
+        class="form-control"
+        style="height: 2em"
+      >
+        <option
+          [ngValue]="status.id"
+          *ngFor="let status of employeeStatusList | async as list"
+        >
+          {{ status.name }}
+        </option>
+      </select>
+
+      <!-- invalid data feedback -->
+      <div 
+        class="invalid-feedback" 
+        *ngIf='showInvalidFeedback("status"); else validFeedbackStatus'
+      >
+        <span *ngIf='formGroup.get("status").errors?.required'>Status is required</span>
+      </div>
+
+      <!-- valid data feedback -->
+      <ng-template #validFeedbackStatus>
+        <div 
+          class="valid-feedback" 
+          *ngIf='!showInvalidFeedback("status")'
+        >
+          <small>ok</small>
+        </div>
+      </ng-template>
+
+    </div>
+
+    <div class="form-group">
+      <label for="registeredBy" class="col-form-label"
+        >Who are you as HR employee?</label
+      >
+      <select
+        [ngClass]='isValid("registeredBy")'
+        formControlName="registeredBy"
+        name="registeredBy"
+        id="registeredBy"
+        class="form-control"
+        style="height: 2em"
+      >
+        <option [ngValue]="employee.id" *ngFor="let employee of hrEmployeeList">
+          {{ employee.name }}
+        </option>
+      </select>
+
+      <!-- invalid data feedback -->
+      <div 
+        class="invalid-feedback" 
+        *ngIf='showInvalidFeedback("registeredBy"); else validFeedbackRegisteredBy'
+      >
+        <span *ngIf='formGroup.get("registeredBy").errors?.required'>Select an employee is required</span>
+      </div>
+
+      <!-- valid data feedback -->
+      <ng-template #validFeedbackRegisteredBy>
+        <div 
+          class="valid-feedback" 
+          *ngIf='!showInvalidFeedback("registeredBy")'
+        >
+          <small>ok</small>
+        </div>
+      </ng-template>
+
+    </div>
+
+    <div class="form-group">
+      <button 
+        [disabled]='formGroup.invalid'
+        class="btn btn-primary btn-block">Send
+      </button>
+      <button
+        type="button"
+        class="btn btn-danger btn-block"
+        (click)="resetForm()">Reset
+      </button>
+    </div>
+  </form>
+</section>

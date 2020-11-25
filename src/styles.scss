@@ -1,0 +1,23 @@
+.form-control.dropdown-selection {
+  height: 2vh !important;
+}
+
+section {
+  margin: 3em 0;
+  padding: 1em;
+  background-color: #eeeeee;
+}
+
+/* Importing Bootstrap SCSS file. */
+@import "~bootstrap/scss/bootstrap";
+
+// regular style toast
+@import "~ngx-toastr/toastr";
+
+// bootstrap style toast
+// or import a bootstrap 4 alert styled design (SASS ONLY)
+// should be after your bootstrap imports, it uses bs4 variables, mixins, functions
+@import "~ngx-toastr/toastr-bs4-alert";
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

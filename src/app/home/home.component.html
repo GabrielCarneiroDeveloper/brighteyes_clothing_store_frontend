@@ -1,0 +1,57 @@
+  <app-header></app-header>
+  <div class="container">
+
+  <app-dashboard
+    *ngIf='session.title === "Admin"'></app-dashboard>
+
+  <section>
+    <h2>Home</h2>
+
+    <div class="row">
+      <button 
+        *ngIf="session.title === 'Seller' || session.title === 'Admin'"
+        [routerLink]="['/shopping-cart']" 
+        class="col-md-3 btn btn-primary"
+      >
+        Perform Sell
+      </button>
+
+      <button 
+        *ngIf="session.title === 'Cashier' || session.title === 'Admin'"
+        [routerLink]="['/cashier']" 
+        class="col-md-3 btn btn-primary"
+      >
+        Operate Cash
+      </button>
+    </div>
+
+    <div class="row">
+      <button 
+        *ngIf="session.title === 'Customer Service' || session.title === 'Admin'"
+        [routerLink]="['/client']" 
+        class="col-md-3 btn btn-primary"
+      >
+        Client
+      </button>
+
+      <button   
+        *ngIf="session.title === 'Warehouse' || session.title === 'Admin'"
+        [routerLink]="['/clothes']" 
+        class="col-md-3 btn btn-primary"
+      >
+        Clothes
+      </button>
+
+      <button 
+        *ngIf="session.title === 'Human Resource' || session.title === 'Admin'"
+        [routerLink]="['/employee']" 
+        class="col-md-3 btn btn-primary"
+      >
+        Employee
+      </button>
+    </div>
+  </section>
+  
+  <router-outlet></router-outlet>
+
+</div>

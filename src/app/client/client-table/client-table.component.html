@@ -1,0 +1,50 @@
+<section>
+  <h2>Client list</h2>
+
+  <table
+    *ngIf="clientList"
+    class="table table-responsive table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Address</th>
+          <th scope="col">CPF</th>
+          <th scope="col">Birthdate</th>
+          <th scope="col">Status</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let client of clientList | async as list">
+            <th scope="row">{{ client.id }}</th>
+            <td>{{ client.name }}</td>
+            <td>{{ client.address }}</td>
+            <td>{{ client.cpf }}</td>
+            <td>{{ parseIsoToLocale(client.birthdate) }}</td>
+            <td>{{ client.status.name }}</td>
+            <td>
+              <button
+                (click)="updateButtonClicked(client)"
+                class="btn btn-primary btn-block">Update
+              </button>
+              
+              <button
+                (click)="removeButtonClicked(client)"
+                class="btn btn-danger btn-block"
+                [disabled]="client.status.name === 'DEACTIVATED'">Deactivate
+              </button>
+            </td>
+        </tr>
+      </tbody>
+  </table>
+  <!-- <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+  </nav> -->
+</section>

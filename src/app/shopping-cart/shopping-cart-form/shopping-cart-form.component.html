@@ -1,0 +1,147 @@
+<section>
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Shopping Cart</h2>
+      </div>
+      <div class="col-md-6 pull-right">
+        <h2>
+          {{ isUpdating ? "Update" : "Create" }}
+        </h2>
+      </div>
+    </div>
+  
+    <form 
+      id="employee-form" 
+      [formGroup]='formGroup' 
+      (submit)='sendShoppingCartForm()'>
+
+        <div class="form-group">
+            <label for="client" class="col-form-label">Client</label>
+            <select
+              formControlName="client"
+              class="form-control"
+              [ngClass]="[isValid('client')]"
+              name="client"
+              id="client"
+              style="height: 2em">
+                <option
+                  [ngValue]="client.id"
+                  *ngFor="let client of clientList | async as list" >
+                    {{ client.name }}
+                </option>
+            </select>
+
+                    <!-- invalid data feedback -->
+            <div 
+              class="invalid-feedback" 
+              *ngIf='showInvalidFeedback("client"); else validFeedbackClient'
+            >
+              <span *ngIf='formGroup.get("client").errors?.required'>Name is required</span>
+            </div>
+
+              <!-- valid data feedback -->
+            <ng-template #validFeedbackClient>
+              <div 
+                class="valid-feedback" 
+                *ngIf='!showInvalidFeedback("client")'
+              >
+                <span>ok</span>
+              </div>
+            </ng-template>
+        </div>   
+  
+        <div class="form-group d-none">
+            <input formControlName="id" type="text" class="form-control" id="id" />
+        </div>
+  
+      <div class="form-group">
+        <label for="status" class="col-form-label">Status</label>
+        <select
+          formControlName="status"
+          [ngClass]="[isValid('status')]"
+          name="status"
+          id="status"
+          class="form-control"
+          style="height: 2em"
+        >
+          <option
+            [ngValue]="status.id"
+            *ngFor="let status of shoppingCartStatusList | async as list"
+          >
+            {{ status.name }}
+          </option>
+        </select>
+
+        <!-- invalid data feedback -->
+        <div 
+          class="invalid-feedback" 
+          *ngIf='showInvalidFeedback("status"); else validFeedbackStatus'
+        >
+          <span *ngIf='formGroup.get("status").errors?.required'>Name is required</span>
+        </div>
+
+          <!-- valid data feedback -->
+        <ng-template #validFeedbackStatus>
+          <div 
+            class="valid-feedback" 
+            *ngIf='!showInvalidFeedback("status")'
+          >
+            <span>ok</span>
+          </div>
+        </ng-template>
+
+
+      </div>
+  
+      <div class="form-group">
+        <label for="seller" class="col-form-label"
+          >Who are you as Seller employee?</label
+        >
+        <select
+          formControlName="seller"
+          [ngClass]="[isValid('seller')]"
+          name="seller"
+          id="seller"
+          class="form-control"
+          style="height: 2em"
+        >
+          <option [ngValue]="employee.id" *ngFor="let employee of sellerEmployeeList | async ">
+            {{ employee.name }}
+          </option>
+        </select>
+
+
+        <!-- invalid data feedback -->
+        <div 
+          class="invalid-feedback" 
+          *ngIf='showInvalidFeedback("seller"); else validFeedbackSeller'
+        >
+          <span *ngIf='formGroup.get("seller").errors?.required'>Seller is required</span>
+        </div>
+
+          <!-- valid data feedback -->
+        <ng-template #validFeedbackSeller>
+          <div 
+            class="valid-feedback" 
+            *ngIf='!showInvalidFeedback("seller")'
+          >
+            <span>ok</span>
+          </div>
+        </ng-template>
+      </div>
+  
+      <div class="form-group">
+        <button 
+          class="btn btn-primary btn-block"
+          [disabled]='formGroup.invalid'>Send</button>
+        <button
+          type="button"
+          class="btn btn-danger btn-block"
+          (click)="resetForm()"
+        >
+          Reset
+        </button>
+      </div>
+    </form>
+  </section>
+  

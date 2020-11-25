@@ -1,0 +1,56 @@
+<section>
+  <h2>Cothes list</h2>
+
+  <div class="form-group">
+    <div style="display: flex">
+      <input type="text" class="form-control" placeholder="Search..." />
+      <button class="btn btn-default">search</button>
+    </div>
+  </div>
+  <table *ngIf="clothesList" class="table table-responsive">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Status</th>
+        <th scope="col">Photo</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let clothes of clothesList | async as list">
+        <th scope="row">{{ clothes.id }}</th>
+        <td>{{ clothes.name }}</td>
+        <td>R$ {{ clothes.price | number: "1.2" }}</td>
+        <td>{{ clothes.quantityInStock }}</td>
+        <td>{{ clothes.status.name }}</td>
+        <td>{{ clothes.photo }}</td>
+        <td>
+          <button
+            (click)="updateButtonClicked(clothes)"
+            class="btn btn-primary btn-block"
+          >
+            Update
+          </button>
+          <button
+            (click)="removeButtonClicked(clothes)"
+            class="btn btn-danger btn-block"
+          >
+            Remove
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+  </nav> -->
+</section>

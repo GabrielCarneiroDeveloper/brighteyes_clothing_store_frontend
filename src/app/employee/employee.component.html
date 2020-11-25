@@ -1,0 +1,16 @@
+<app-header></app-header>
+<div class="container">
+    <app-employee-form 
+        (createEmployee)='create($event)' 
+        (updateEmployee)='update($event)'
+        [employeeStatusList]='employeeStatusList'
+        [employeeTitleList]='employeeTitleList' 
+        [hrEmployeeList]='hrEmployeeList'>
+    </app-employee-form>
+
+    <app-employee-table 
+        (removeObject)='remove($event)'
+        (findOne)='findOne($event)'
+        [employeeList]='employeeList' >
+    </app-employee-table>
+</div>

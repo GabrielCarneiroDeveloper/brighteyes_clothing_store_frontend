@@ -1,0 +1,64 @@
+<section>
+    <div class="btn-group mb-4">
+        <a 
+            (click)='generateExcel()'
+            [href]='clientAsExcelAddress'
+            class="btn btn-success">Export to Excel
+        </a>
+        <button 
+            (click)='generatePdf()'
+            class="btn btn-danger">Export to PDF
+        </button>
+    </div>
+
+    <div id="html2Pdf" >
+        <h1>Dashboard</h1>
+        <div class="row mt-5">
+            <app-pie
+                *ngIf='clothesAvailability'
+                class="col-md-6"
+                title='Clothes availability'
+                [labels]='clothesAvailability.labels'
+                [values]='clothesAvailability.values'>
+            </app-pie>
+
+            <app-pie 
+                *ngIf='clientAvailabilityMetrics'
+                class="col-md-6"
+                title='Client availability'
+                [labels]='clientAvailabilityMetrics.labels'
+                [values]='clientAvailabilityMetrics.values'>
+            </app-pie>
+        </div>
+
+        <div class="mt-5">
+            <app-bars
+                *ngIf='clientRegisterMetrics'
+                title='Clients registered in current year'
+                [input]='clientRegisterMetrics'>
+            </app-bars>
+        </div>
+
+        <div id="rankings">
+            <div class="row">
+                <div class="col-md-6">
+                    <span id="title">Shopping Carts </span><br>registered in current month
+                    <div class="client-ranking">
+                        <div class="ranked client__firstly">
+                            <span class="value">{{ shoppingCarCreatedInCurrentMonth || 0 }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <span id="title">Clients </span><br>registered in current month
+                    <div class="client-ranking">
+                        <div class="ranked client__firstly">
+                            <span class="value">{{ clientCreatedInCurrentMonth || 0 }}</span>
+                        </div>
+                    </div>
+                </div>        
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,47 @@
+<section>
+    <h2>Shopping Cart list</h2>
+  
+    <ng-template #noDataMessage>
+      <div class="text-center mt-5">
+        <h4>There is no Shopping Cart in progress...</h4>
+      </div>
+    </ng-template>
+    <table 
+      *ngIf='shoppingCartList$ | async as list; else noDataMessage' 
+      class="table table-responsive">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Client</th>
+            <th scope="col">Seller</th>
+            <th scope="col">Status</th>
+            <th scope="col">Clothes List</th>
+            <th scope="col">Created at</th>
+            <th scope="col">Total Cost</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let object of shoppingCartList$ | async">
+          <tr>
+            <th scope="row">{{ object.id }}</th>
+            <td>{{ object.client.name }}</td>
+            <td>{{ object.seller.name }}</td>
+            <td>{{ object.status.name }}</td>
+            <td>
+              <app-cashier-modal
+                [shoppingCart]="object"
+              ></app-cashier-modal>
+            </td>
+            <td>{{ parseIsoToLocale(object.createdAt) }}</td>
+            <td>{{ totalValue(object?.clothes) }}</td>
+            <td>
+              <app-cashier-modal-finish-purchase
+                (sendPayment)='sendPayment($event)'
+                [shoppingCart]='object'>
+              </app-cashier-modal-finish-purchase>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+  </section>
+  

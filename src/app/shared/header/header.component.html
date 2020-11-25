@@ -1,0 +1,17 @@
+<div id="header">
+    <a class="btn btn-default" [routerLink]="['home']">Home</a>
+    <!-- <span class="h4">Welcome, {{ session.username }} ({{ session.title }})</span> -->
+    <!-- <button (click)='logOut()' class="btn btn-default pull-right">Logout</button> -->
+    
+    <div>
+        <button 
+            class="btn btn-default"
+            mat-button 
+            [matMenuTriggerFor]="menu">Menu ({{ session.title }})
+        </button>
+        
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)='logOut()'>Logout</button>
+        </mat-menu>
+    </div>
+</div>

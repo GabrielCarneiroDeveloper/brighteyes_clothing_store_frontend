@@ -1,0 +1,14 @@
+.container {
+  width: 80vw;
+
+  .form-control {
+    padding: 2em;
+  }
+
+  #buttons {
+    height: 9vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}

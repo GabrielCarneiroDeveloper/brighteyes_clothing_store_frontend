@@ -1,0 +1,28 @@
+#rankings {
+  padding: 3em 0;
+  margin: 2em 0;
+}
+
+.shopping-cart-ranking .client-ranking {
+  display: flex;
+}
+
+#rankings {
+  #title {
+    font-weight: bolder;
+    font-size: 20pt;
+  }
+
+  .ranked {
+    margin: 1em;
+    padding: 2em;
+    font-size: 16pt;
+    background-color: #20c997;
+    color: white;
+
+    .value {
+      font-size: 32pt;
+      font-weight: 500;
+    }
+  }
+}

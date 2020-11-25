@@ -1,0 +1,13 @@
+<app-header></app-header>
+<div class="container">
+  <app-clothes-form
+    (createObject)="createClothes($event)"
+    (updateObject)='updateClothes($event)'
+    [statusList]="clothesStatusList$"
+  ></app-clothes-form>
+  <app-clothes-table
+    (removeObject)="removeClothes($event)"
+    (findOne)="findOne($event)"
+    [clothesList]="clothesList$"
+  ></app-clothes-table>
+</div>

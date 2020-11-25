@@ -1,0 +1,16 @@
+<app-header></app-header>
+<div class="container">
+  <app-shopping-cart-form
+    [shoppingCartStatusList]='shoppingCartStatusList$'
+    [sellerEmployeeList]='sellerEmployeeList'
+    [clientList]='clientList$'
+    (registerShoppingCart)='registerShoppingCart($event)'
+    (updateShoppingCart)='updateShoppingCart($event)'
+  ></app-shopping-cart-form>
+  <app-shopping-cart-table
+    (removeObject)="remove($event)"
+    (findOne)="findOne($event)"
+    (loadShoppingCartList)='loadShoppingCartList()'
+    [shoppingCartList$]="shoppingCartList$"
+  ></app-shopping-cart-table>
+</div>

@@ -1,0 +1,13 @@
+<app-header></app-header>
+<div class="container">
+  <app-client-form
+    (createObject)="createClient($event)"
+    (updateObject)="updateClient($event)"
+    [statusList]="clientStatusList$"
+  ></app-client-form>
+  <app-client-table
+    (removeObject)="removeClient($event)"
+    (findOne)="findOne($event)"
+    [clientList]="clientList$"
+  ></app-client-table>
+</div>

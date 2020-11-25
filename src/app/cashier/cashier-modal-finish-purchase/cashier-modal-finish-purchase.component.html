@@ -1,0 +1,73 @@
+<!--Large modal-->
+<button class="btn btn-primary btn-block" (click)="showModal()">Payment</button>
+
+<div
+  bsModal
+  #lgModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-sizes-name1"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">
+          Payment
+        </h4>
+        <button
+          type="button"
+          class="close pull-right"
+          (click)="lgModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+
+        <section>
+          <div class="row">
+            <div class="form-group col-md-4">
+              <label for="price">Total</label>
+                <input 
+                readonly 
+                name="price" 
+                type="number" 
+                class="form-control-plaintext" 
+                [value]="totalCost">
+            </div>
+            <div class="form-group col-md-4">
+              <label for="totalPayed">Payed</label>
+              <input  
+                name="totalPayed" 
+                type="number" 
+                class="form-control" 
+                (keyup)='calcTotalPayed($event.target.value)'>
+            </div>
+  
+            <div class="form-group col-md-4">
+              <label for="difference">Difference</label>
+              <input
+                [value]='differenceCost || 0.0'
+                type="number" 
+                class="form-control" 
+                name="difference">
+            </div>
+          </div>
+        </section>
+        
+        <div>
+          <button   
+            class="btn btn-default" 
+            [disabled]='differenceCost < 0' 
+            [ngClass]="{'btn-success': differenceCost >= 0 }" 
+            (click)='paymentButtonClicked()'>
+            Pay
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
