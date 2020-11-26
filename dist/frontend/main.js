@@ -7983,7 +7983,7 @@ const environment = {
     jwtSecretkey: 'kl1hj2kl34h1&HJH',
     logLevel: 'debug',
     // BACKEND_ADDRESS: 'https://brighteyes-backend.herokuapp.com',
-    BACKEND_ADDRESS: 'http://localhost:3333',
+    BACKEND_ADDRESS: 'https://brighteyes-backend.herokuapp.com',
     googleClientId: '321801975531-44gmjluuqpm2tptach8r98a86gqr3fg9.apps.googleusercontent.com',
 };
 /*
