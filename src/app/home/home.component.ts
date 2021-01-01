@@ -5,6 +5,8 @@ import {
   DataStoredInToken,
 } from '../common/services/session.service';
 import { EmployeeTitleEnum } from '../employee/employee.enum';
+import * as $ from 'jquery';
+
 
 @Component({
   selector: 'app-home',
@@ -18,6 +20,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.session = this.sessionService.decodeSession();
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
   }
 
   isHumanResource(): boolean {

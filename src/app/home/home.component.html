@@ -1,57 +1,116 @@
-  <app-header></app-header>
-  <div class="container">
+<div class="d-flex" id="wrapper">
+	
+	<!-- Sidebar -->
+	<div class="bg-light border-right" id="sidebar-wrapper">
 
-  <app-dashboard
-    *ngIf='session.title === "Admin"'></app-dashboard>
+	  	<div class="sidebar-heading"> <br></div>
+		<div class="list-group list-group-flush">
+			
+			<a 
+				*ngIf="session.title === 'Seller' || session.title === 'Admin'"
+				href="#"
+				[routerLink]="['/shopping-cart']"
+				class="list-group-item list-group-item-action bg-light">Perform sell</a>
 
-  <section>
-    <h2>Home</h2>
+			<a 
+				href="#"
+				*ngIf="session.title === 'Cashier' || session.title === 'Admin'"
+				[routerLink]="['/cashier']"
+				class="list-group-item list-group-item-action bg-light">Operate cash</a>
 
-    <div class="row">
-      <button 
-        *ngIf="session.title === 'Seller' || session.title === 'Admin'"
-        [routerLink]="['/shopping-cart']" 
-        class="col-md-3 btn btn-primary"
-      >
-        Perform Sell
-      </button>
+			<a 
+				*ngIf="session.title === 'Customer Service' || session.title === 'Admin'"
+				href="#"
+				[routerLink]="['/client']" 
+				class="list-group-item list-group-item-action bg-light">Client</a>
 
-      <button 
-        *ngIf="session.title === 'Cashier' || session.title === 'Admin'"
-        [routerLink]="['/cashier']" 
-        class="col-md-3 btn btn-primary"
-      >
-        Operate Cash
-      </button>
-    </div>
+			<a 
+				*ngIf="session.title === 'Warehouse' || session.title === 'Admin'"
+				href="#"
+				[routerLink]="['/clothes']" 
+				class="list-group-item list-group-item-action bg-light">Clothes</a>
 
-    <div class="row">
-      <button 
-        *ngIf="session.title === 'Customer Service' || session.title === 'Admin'"
-        [routerLink]="['/client']" 
-        class="col-md-3 btn btn-primary"
-      >
-        Client
-      </button>
+		</div>
 
-      <button   
-        *ngIf="session.title === 'Warehouse' || session.title === 'Admin'"
-        [routerLink]="['/clothes']" 
-        class="col-md-3 btn btn-primary"
-      >
-        Clothes
-      </button>
-
-      <button 
-        *ngIf="session.title === 'Human Resource' || session.title === 'Admin'"
-        [routerLink]="['/employee']" 
-        class="col-md-3 btn btn-primary"
-      >
-        Employee
-      </button>
-    </div>
-  </section>
+	</div>
+	<!-- /#sidebar-wrapper -->
+	<!-- Page Content -->
+	<div id="page-content-wrapper">
+		<app-header></app-header>
+	  <div class="container-fluid">
+		<app-dashboard
+		*ngIf='session.title === "Admin"'></app-dashboard>
+		<router-outlet></router-outlet>
+	  </div>
+	<!-- /#page-content-wrapper -->
+	
+  </div>
   
-  <router-outlet></router-outlet>
+	
+	
+	
+	
+	
+	
+	
+	<!-- <app-header></app-header>
+	
+	<div class="wrapper">
+    <nav id="sidebar">
 
-</div>
+
+			<ul class="list-unstyled components">
+
+				<li class="active">
+					<a 
+						*ngIf="session.title === 'Seller' || session.title === 'Admin'"
+						href="#"
+						[routerLink]="['/shopping-cart']">Perform sell</a>
+				</li>
+
+				<li>
+						<a 
+							href="#"
+							*ngIf="session.title === 'Cashier' || session.title === 'Admin'"
+							[routerLink]="['/cashier']">Operate cash</a>
+				</li>
+
+
+				<li>
+					<a 
+						*ngIf="session.title === 'Customer Service' || session.title === 'Admin'"
+						href="#"
+        		[routerLink]="['/client']" >Client</a>
+				</li>
+
+
+				<li>
+					<a 
+						*ngIf="session.title === 'Warehouse' || session.title === 'Admin'"
+						href="#"
+        		[routerLink]="['/clothes']" >Clothes</a>
+				</li>
+
+
+				<li>
+					<a 
+						*ngIf="session.title === 'Human Resource' || session.title === 'Admin'"
+						href="#"
+        		[routerLink]="['/employee']">Operate cash</a>
+				</li>
+
+			</ul>
+	</nav>
+
+	<div id="content">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container" style='width: 100%;'>
+
+					<app-dashboard
+						*ngIf='session.title === "Admin"'></app-dashboard>
+
+						<router-outlet></router-outlet>
+        </div>
+    </nav>
+	</div>
+</div> -->

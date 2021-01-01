@@ -10,5 +10,6 @@ import { MatButtonModule } from '@angular/material/button'
   declarations: [HeaderComponent],
   imports: [CommonModule, RouterModule, MatMenuModule, MatButtonModule],
   exports: [HeaderComponent],
+  providers: []
 })
 export class SharedModule {}

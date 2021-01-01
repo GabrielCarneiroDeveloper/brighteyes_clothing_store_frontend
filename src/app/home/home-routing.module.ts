@@ -10,6 +10,10 @@ const routes: Routes = [
         path: '',
         component: HomeComponent,
       },
+      {
+        path: 'shopping-cart',
+        loadChildren: './../shopping-cart/shopping-cart.module#ShoppingCartModule'
+      }
     ],
   },
 ];
