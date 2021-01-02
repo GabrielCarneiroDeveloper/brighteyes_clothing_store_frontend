@@ -7,28 +7,29 @@
   class="modal fade"
   tabindex="-1"
   role="dialog"
-  aria-labelledby="dialog-sizes-name1"
->
+  aria-labelledby="dialog-sizes-name1">
+
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h4 id="dialog-sizes-name1" class="modal-title pull-left">
-          Large modal
+          Shopping Cart clothes list
         </h4>
         <button
           type="button"
           class="close pull-right"
           (click)="lgModal.hide()"
-          aria-label="Close"
-        >
+          aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       
       <div class="modal-body">
-
         <div>
-          <form [formGroup]='formGroup' class="mt-5" action="">
+          <form 
+            [formGroup]='formGroup' 
+            class="mt-5" 
+            action="">
             <div class="form-group">
               <div class="row">
                 <div class="col-md-10">
@@ -41,6 +42,7 @@
                 </div>
                 <div class="col-md-2">
                   <button 
+                    type="button"
                     (click)='addClothesButtonClicked()' 
                     class='btn btn-primary btn-block'>Add
                   </button>

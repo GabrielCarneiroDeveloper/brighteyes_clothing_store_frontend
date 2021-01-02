@@ -17,6 +17,7 @@ interface TokenData {
 })
 export class AuthComponent implements OnInit {
   loginForm: FormGroup;
+  loading: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -30,9 +31,11 @@ export class AuthComponent implements OnInit {
       email: ['', [Validators.required]], // hr@brighteyes.com
       password: ['', [Validators.required]], // senha123
     });
+    this.loading = false;
   }
 
   login(): void {
+    this.loading = true;
     this.authService
       .login({
         email: this.loginForm.controls.email.value,
@@ -43,8 +46,12 @@ export class AuthComponent implements OnInit {
           console.log('Employee logged in successfully');
           this.sessionService.createSession(token);
           this.router.navigate(['home']);
+          this.loading = false;
         },
-        ({ error }: HttpErrorResponse) => console.error(error.message)
+        ({ error }: HttpErrorResponse) => {
+          console.error(error.message);
+          this.loading = false;
+        }
       );
   }
 }

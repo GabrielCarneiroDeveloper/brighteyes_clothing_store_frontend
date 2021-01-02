@@ -5,6 +5,7 @@ import {
   DataStoredInToken,
   SessionService,
 } from '../common/services/session.service';
+import { LoadingService } from '../shared/loading/loading.service';
 import {
   ShoppingCart,
   ShoppingCartStatusEnum,
@@ -22,7 +23,8 @@ export class CashierComponent implements OnInit {
 
   constructor(
     private shoppingCartService: ShoppingCartService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +41,7 @@ export class CashierComponent implements OnInit {
           )
         )
       );
+    this.loadingService.stop();
   }
 
   async paymentRegister({

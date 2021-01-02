@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
+import { LoadingService } from '../shared/loading/loading.service';
 import { ClothesFormComponent } from './clothes-form/clothes-form.component';
 import {
   ClothesCreateDTO,
@@ -23,11 +24,15 @@ export class ClothesComponent implements OnInit {
   clothesList$: Observable<ClothesListDTO[]>;
   clothesStatusList$: Observable<ClothesStatus[]>;
 
-  constructor(private clothesService: ClothesService) {}
+  constructor(
+    private clothesService: ClothesService,
+    private loadingService: LoadingService
+  ) {}
 
   ngOnInit(): void {
     this.getClothesList();
     this.clothesStatusList$ = this.clothesService.statusList();
+    this.loadingService.stop();
   }
 
   createClothes(formValue: ClothesCreateDTO): void {

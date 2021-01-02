@@ -1,6 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { endsWith } from 'lodash';
 import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+import { LoadingService } from '../shared/loading/loading.service';
 import { ClientFormComponent } from './client-form/client-form.component';
 import {
   ClientCreateDTO,
@@ -22,11 +25,16 @@ export class ClientComponent implements OnInit {
   clientList$: Observable<ClientListDTO[]>;
   clientStatusList$: Observable<ClientStatus[]>;
 
-  constructor(private clientService: ClientService) {}
+  constructor(
+    private clientService: ClientService,
+    private loadingService: LoadingService
+  ) {}
 
   ngOnInit(): void {
     this.getClientList();
-    this.clientStatusList$ = this.clientService.statusList();
+    this.clientStatusList$ = this.clientService
+      .statusList()
+      .pipe(finalize(() => this.loadingService.stop()));
   }
 
   getClientList(): void {
@@ -37,7 +45,7 @@ export class ClientComponent implements OnInit {
     this.clientService.create(formValue).subscribe(
       () => {
         console.log('Client created successfully');
-        this.clientForm.resetForm()
+        this.clientForm.resetForm();
         this.getClientList();
       },
       ({ error }: HttpErrorResponse) => {

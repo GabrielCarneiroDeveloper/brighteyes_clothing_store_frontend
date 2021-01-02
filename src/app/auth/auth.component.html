@@ -26,7 +26,14 @@
                 <div id="buttons" class="mt-5">
                     <button  
                         type="submit" 
-                        class="btn btn-primary btn-block p-4">Sign in using local credentials
+                        class="btn btn-primary btn-block p-4">
+
+                        <span *ngIf="loading === false" >Sign in using local credentials</span>
+
+                        <div *ngIf="loading === true" class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+
                     </button>
                 </div>
             </form>

@@ -7,10 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import {
-  BsModalRef,
-  ModalDirective,
-} from 'ngx-bootstrap/modal';
+import { BsModalRef, ModalDirective } from 'ngx-bootstrap/modal';
 import { Clothes } from 'src/app/clothes/clothes.interface';
 import { environment } from 'src/environments/environment';
 import { ShoppingCart } from '../shopping-cart.interface';
@@ -39,9 +36,7 @@ export class ShoppingCartModalComponent implements OnInit {
     shoppingCartId: number;
   }>();
 
-  constructor(
-    private fb: FormBuilder
-  ) {}
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.totalCost = 0;
@@ -88,8 +83,8 @@ export class ShoppingCartModalComponent implements OnInit {
   }
 
   fixClothesPhotoAddress(clothes: Clothes) {
-    return clothes.photo.includes('http') ? 
-      clothes.photo : 
-      `${environment.BACKEND_ADDRESS}/images/clothes/${clothes.photo}`
+    return clothes.photo.includes('http')
+      ? clothes.photo
+      : `${environment.BACKEND_ADDRESS}/images/clothes/${clothes.photo}`;
   }
 }

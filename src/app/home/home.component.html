@@ -1,11 +1,8 @@
+<app-loading ></app-loading>
 <div class="d-flex" id="wrapper">
-	
-	<!-- Sidebar -->
 	<div class="bg-light border-right" id="sidebar-wrapper">
-
 	  	<div class="sidebar-heading"> <br></div>
-		<div class="list-group list-group-flush">
-			
+		<div class="list-group list-group-flush">	
 			<a 
 				*ngIf="session.title === 'Seller' || session.title === 'Admin'"
 				href="#"
@@ -29,29 +26,18 @@
 				href="#"
 				[routerLink]="['/clothes']" 
 				class="list-group-item list-group-item-action bg-light">Clothes</a>
-
 		</div>
-
 	</div>
-	<!-- /#sidebar-wrapper -->
-	<!-- Page Content -->
+
 	<div id="page-content-wrapper">
 		<app-header></app-header>
-	  <div class="container-fluid">
-		<app-dashboard
-		*ngIf='session.title === "Admin"'></app-dashboard>
-		<router-outlet></router-outlet>
-	  </div>
-	<!-- /#page-content-wrapper -->
-	
-  </div>
-  
-	
-	
-	
-	
-	
-	
+	  	<div class="container-fluid">
+			<app-dashboard
+				*ngIf='session.title === "Admin"'></app-dashboard>
+		<!-- <router-outlet></router-outlet> -->
+	  	</div>
+  	</div>
+</div>
 	
 	<!-- <app-header></app-header>
 	

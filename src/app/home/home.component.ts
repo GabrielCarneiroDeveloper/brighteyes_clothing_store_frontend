@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentChecked, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   SessionService,
@@ -6,7 +6,7 @@ import {
 } from '../common/services/session.service';
 import { EmployeeTitleEnum } from '../employee/employee.enum';
 import * as $ from 'jquery';
-
+import { LoadingService } from '../shared/loading/loading.service';
 
 @Component({
   selector: 'app-home',
@@ -16,33 +16,18 @@ import * as $ from 'jquery';
 export class HomeComponent implements OnInit {
   session: DataStoredInToken;
 
-  constructor(private sessionService: SessionService) {}
+  constructor(
+    private sessionService: SessionService,
+    private loadingService: LoadingService
+  ) {}
 
   ngOnInit(): void {
     this.session = this.sessionService.decodeSession();
-    $("#menu-toggle").click(function(e) {
+    $('#menu-toggle').click(function (e) {
       e.preventDefault();
-      $("#wrapper").toggleClass("toggled");
+      $('#wrapper').toggleClass('toggled');
     });
-  }
 
-  isHumanResource(): boolean {
-    return;
-  }
-
-  isCashier(): boolean {
-    return;
-  }
-
-  isCustomerService(): boolean {
-    return;
-  }
-
-  isSeller(): boolean {
-    return;
-  }
-
-  isWarehouse(): boolean {
-    return;
+    this.loadingService.stop();
   }
 }

@@ -5,6 +5,7 @@ import { Client } from '../client/client.interfaces';
 import { ClientService } from '../client/client.service';
 import { Employee } from '../employee/employee.models';
 import { EmployeeService } from '../employee/employee.service';
+import { LoadingService } from '../shared/loading/loading.service';
 import { ShoppingCartFormComponent } from './shopping-cart-form/shopping-cart-form.component';
 import {
   ShoppingCart,
@@ -32,7 +33,8 @@ export class ShoppingCartComponent implements OnInit {
   constructor(
     private shoppingCartService: ShoppingCartService,
     private employeeService: EmployeeService,
-    private clientService: ClientService
+    private clientService: ClientService,
+    private loadingService: LoadingService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -40,6 +42,7 @@ export class ShoppingCartComponent implements OnInit {
     this.shoppingCartStatusList$ = this.shoppingCartService.getStatusList();
     this.sellerEmployeeList = this.employeeService.getList().toPromise();
     this.clientList$ = this.clientService.list();
+    this.loadingService.stop();
   }
 
   remove(event): void {
@@ -73,7 +76,7 @@ export class ShoppingCartComponent implements OnInit {
         this.shoppingCartForm.resetForm();
       },
       ({ error }: HttpErrorResponse) => {
-        alert(error.message)
+        alert(error.message);
       }
     );
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { DashboardService } from './dashboard.service'
@@ -14,6 +14,8 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  @Output() showLoading = new EventEmitter<boolean>()
+
   statistics$: Observable<StatisticsResponse>
   statistics: StatisticsResponse
   clothesAvailability: { labels: string[][], values: number[] }
@@ -49,6 +51,8 @@ export class DashboardComponent implements OnInit {
       label: 'Quantity of clients',
       data: response.client_registered_current_year_by_month.data
     }  
+
+    // this.showLoading.emit(true)
   }
 
   generatePdf() {
