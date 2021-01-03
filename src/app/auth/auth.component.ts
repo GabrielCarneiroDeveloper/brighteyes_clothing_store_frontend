@@ -49,6 +49,7 @@ export class AuthComponent implements OnInit {
           this.loading = false;
         },
         ({ error }: HttpErrorResponse) => {
+          alert(error.message);
           console.error(error.message);
           this.loading = false;
         }
