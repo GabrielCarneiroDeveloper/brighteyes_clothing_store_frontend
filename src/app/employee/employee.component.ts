@@ -12,6 +12,8 @@ import { EmployeeService } from './employee.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { EmployeeTitleEnum } from './employee.enum';
 import { EmployeeFormComponent } from './employee-form/employee-form.component';
+import { LoadingService } from '../shared/loading/loading.service';
+import { finalize, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-employee',
@@ -28,7 +30,10 @@ export class EmployeeComponent implements OnInit {
 
   selectedEmployee: Employee;
 
-  constructor(private employeeService: EmployeeService) {}
+  constructor(
+    private employeeService: EmployeeService,
+    private loadingService: LoadingService
+  ) {}
 
   async ngOnInit(): Promise<void> {
     this.getEmployeeList();
@@ -43,6 +48,7 @@ export class EmployeeComponent implements OnInit {
       );
     this.employeeStatusList = this.employeeService.getStatusList();
     this.employeeTitleList = this.employeeService.getTitleList();
+    this.loadingService.stop();
   }
 
   getEmployeeList(): void {
@@ -59,29 +65,31 @@ export class EmployeeComponent implements OnInit {
       },
       ({ error }: HttpErrorResponse) => {
         console.error(error.message);
-        console.error(error.error_message);
+        alert(error.error_message);
       }
     );
   }
 
   async remove(employee: EmployeeRemoveDTO): Promise<void> {
     const response = await this.employeeService.remove(employee);
-    response.subscribe(
-      ({ message }) => {
-        console.log(message);
-        this.getEmployeeList();
-      },
-      ({ error }: HttpErrorResponse) => {
-        console.error(error);
-      }
-    );
+    response
+      .pipe(
+        tap(() => this.loadingService.start()),
+        finalize(() => this.loadingService.stop())
+      )
+      .subscribe(
+        ({ message }) => {
+          this.getEmployeeList();
+        },
+        ({ error }: HttpErrorResponse) => {
+          console.error(error);
+        }
+      );
   }
 
   update(employee: Partial<Employee>): void {
-    console.log('Creating a new employee');
     this.employeeService.update(employee).subscribe(
       ({ message }) => {
-        console.log(message);
         this.employeeForm.resetForm();
         this.getEmployeeList();
       },
@@ -95,6 +103,8 @@ export class EmployeeComponent implements OnInit {
     try {
       const foundEmployee = await this.employeeService
         .getOne(employee.id)
+        .pipe(tap(() => this.loadingService.start()))
+        .pipe(finalize(() => this.loadingService.stop()))
         .toPromise();
       delete foundEmployee.password;
       this.employeeForm.setEmployeeToUpdate(foundEmployee);

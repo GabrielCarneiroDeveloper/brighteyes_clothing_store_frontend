@@ -26,6 +26,12 @@
 				href="#"
 				[routerLink]="['/clothes']" 
 				class="list-group-item list-group-item-action bg-light">Clothes</a>
+
+			<a 
+				*ngIf="session.title === 'Human Resource' || session.title === 'Admin'"
+				href="#"
+				[routerLink]="['/employee']" 
+				class="list-group-item list-group-item-action bg-light">Employees</a>
 		</div>
 	</div>
 
@@ -82,7 +88,7 @@
 					<a 
 						*ngIf="session.title === 'Human Resource' || session.title === 'Admin'"
 						href="#"
-        		[routerLink]="['/employee']">Operate cash</a>
+        		[routerLink]="['/employee']">Employees</a>
 				</li>
 
 			</ul>

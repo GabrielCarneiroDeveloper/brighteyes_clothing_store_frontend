@@ -23,6 +23,7 @@ export class EmployeeTableComponent implements OnInit, OnDestroy {
 
   @Output() removeObject = new EventEmitter<EmployeeRemoveDTO>();
   @Output() findOne = new EventEmitter<EmployeeUpdateDTO>();
+  @Output() startLoading = new EventEmitter<void>();
 
   value: string = '';
   debounce: Subject<string> = new Subject<string>();
@@ -43,10 +44,6 @@ export class EmployeeTableComponent implements OnInit, OnDestroy {
     this.debounce.unsubscribe();
   }
 
-  search(searchValue: string): void {
-    console.log(searchValue);
-  }
-
   removeButtonClicked(employee: EmployeeRemoveDTO) {
     this.removeObject.next(employee);
   }
@@ -56,6 +53,6 @@ export class EmployeeTableComponent implements OnInit, OnDestroy {
   }
 
   parseIsoToLocale(date: string) {
-    return parseFromISOToLocaleDate(date)
+    return parseFromISOToLocaleDate(date);
   }
 }

@@ -65,7 +65,6 @@ export class EmployeeService {
   async remove(
     employee: EmployeeRemoveDTO
   ): Promise<Observable<UpdatedSuccessfullyResponse>> {
-    console.log(`try to remove employee "${employee.name}"`);
     const statusList = await this.getStatusList().toPromise();
     const deactivatedStatus = statusList.filter(
       (status) => status.name === 'DEACTIVATED'
