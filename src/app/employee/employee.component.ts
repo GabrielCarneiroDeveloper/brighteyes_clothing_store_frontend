@@ -10,7 +10,7 @@ import {
 } from './employee.interfaces';
 import { EmployeeService } from './employee.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { EmployeeTitleEnum } from './employee.enum';
+import { EmployeeStatusEnum, EmployeeTitleEnum } from './employee.enum';
 import { EmployeeFormComponent } from './employee-form/employee-form.component';
 import { LoadingService } from '../shared/loading/loading.service';
 import { finalize, tap } from 'rxjs/operators';
@@ -37,13 +37,15 @@ export class EmployeeComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.getEmployeeList();
-    this.employeeList = this.employeeService.getList();
+    // this.employeeList = this.employeeService.getList();
     this.selectedEmployee = new Employee();
     this.hrEmployeeList = await this.employeeList
       .toPromise()
       .then((employees) =>
         employees.filter(
-          (employee) => employee.title.name === EmployeeTitleEnum.HUMAN_RESOURCE
+          (employee) =>
+            employee.title.name === EmployeeTitleEnum.HUMAN_RESOURCE &&
+            employee.status.name === 'ACTIVATED'
         )
       );
     this.employeeStatusList = this.employeeService.getStatusList();
@@ -52,7 +54,13 @@ export class EmployeeComponent implements OnInit {
   }
 
   getEmployeeList(): void {
-    this.employeeList = this.employeeService.getList();
+    this.employeeList = this.employeeService.getList().pipe(
+      tap((employeeList) => {
+        return employeeList.map((employee) => {
+          return employee;
+        });
+      })
+    );
   }
 
   create(employeeCreateDto: EmployeeCreateDTO): void {

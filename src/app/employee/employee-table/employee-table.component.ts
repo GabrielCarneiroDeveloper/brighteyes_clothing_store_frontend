@@ -18,7 +18,7 @@ import { parseFromISOToLocaleDate } from 'src/app/common/dateFormatter';
   templateUrl: './employee-table.component.html',
   styleUrls: ['./employee-table.component.scss'],
 })
-export class EmployeeTableComponent implements OnInit, OnDestroy {
+export class EmployeeTableComponent implements OnDestroy {
   @Input() employeeList: Observable<Employee[]>;
 
   @Output() removeObject = new EventEmitter<EmployeeRemoveDTO>();
@@ -31,11 +31,11 @@ export class EmployeeTableComponent implements OnInit, OnDestroy {
   /**
    * necessário implementar a lógica do search input
    */
-  async ngOnInit(): Promise<void> {
-    this.debounce.pipe(debounceTime(300)).subscribe((filter) => {
-      console.log(filter);
-    });
-  }
+  // async ngOnInit(): Promise<void> {
+  //   this.debounce.pipe(debounceTime(300)).subscribe((filter) => {
+  //     console.log(filter);
+  //   });
+  // }
 
   ngOnDestroy(): void {
     /**
