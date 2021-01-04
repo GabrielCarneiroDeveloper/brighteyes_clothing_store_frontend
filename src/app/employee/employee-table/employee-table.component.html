@@ -13,12 +13,12 @@
       <button class="btn btn-default">search</button>
     </div>
   </div> -->
-  <table class="table table-responsive">
+  <table class="table table-responsive-lg">
     <thead class="thead-dark">
       <tr>
         <th scope="col">#</th>
         <th scope="col">Name</th>
-        <th scope="col">Date</th>
+        <th class='d-none d-md-block' scope="col">Birthdate</th>
         <th scope="col">E-mail</th>
         <th scope="col">Title</th>
         <th scope="col">Status</th>
@@ -29,7 +29,7 @@
       <tr *ngFor="let employee of employeeList | async">
         <th scope="row">{{ employee.id }}</th>
         <td>{{ employee.name }}</td>
-        <td>{{ employee.birthdate }}</td>
+        <td class='d-none d-md-block'>{{ employee.birthdate }}</td>
         <td>{{ employee.email }}</td>
         <td>{{ employee.title?.name || "" }}</td>
         <td>{{ employee.status?.name || "" }}</td>
