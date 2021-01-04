@@ -5,7 +5,7 @@ import { Clothes } from 'src/app/clothes/clothes.interface';
 import { ShoppingCart } from '../shopping-cart.interface';
 import { ShoppingCartService } from '../shopping-cart.service';
 import { calcTotalCost } from './../../common/calcTotalCost';
-import { parseFromISOToLocaleDate } from './../../common/dateFormatter'
+import { parseFromISOToLocaleDate } from './../../common/dateFormatter';
 
 @Component({
   selector: 'app-shopping-cart-table',
@@ -18,7 +18,7 @@ export class ShoppingCartTableComponent implements OnInit {
   @Output() loadShoppingCartList = new EventEmitter<void>();
   @Output() findOne = new EventEmitter<ShoppingCart>();
 
-  a: boolean
+  a: boolean;
 
   constructor(private shoppingCartService: ShoppingCartService) {}
 
@@ -29,7 +29,7 @@ export class ShoppingCartTableComponent implements OnInit {
   }
 
   parseDate(dateIso: string) {
-    return parseFromISOToLocaleDate(dateIso)
+    return parseFromISOToLocaleDate(dateIso);
   }
 
   addClothes({
@@ -46,7 +46,7 @@ export class ShoppingCartTableComponent implements OnInit {
           this.loadShoppingCartList.next();
         },
         ({ error }: HttpErrorResponse) => {
-          alert('Requested clothes not found or its already added')
+          alert('Requested clothes not found or out of stock or already added');
         }
       );
   }
