@@ -29,7 +29,7 @@
       <tr *ngFor="let employee of employeeList | async">
         <th scope="row">{{ employee.id }}</th>
         <td>{{ employee.name }}</td>
-        <td>{{ parseIsoToLocale(employee.birthdate) }}</td>
+        <td>{{ employee.birthdate }}</td>
         <td>{{ employee.email }}</td>
         <td>{{ employee.title?.name || "" }}</td>
         <td>{{ employee.status?.name || "" }}</td>

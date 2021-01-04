@@ -10,7 +10,11 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
-import { dateFormatter, dateParser, parseFromISOToLocaleDate } from './../../common/dateFormatter';
+import {
+  dateFormatter,
+  dateParser,
+  parseFromISOToLocaleDate,
+} from './../../common/dateFormatter';
 
 import {
   EmployeeCreateDTO,
@@ -64,10 +68,10 @@ export class EmployeeFormComponent implements OnInit {
       name: [null, [Validators.required]],
       email: [null, [Validators.email, Validators.required]],
       status: [null, [Validators.required]],
-      birthdate: [null, [
-        Validators.required,
-        Validators.pattern(/^(\d{2}\/){2}\d{4}$/)
-      ]],
+      birthdate: [
+        null,
+        [Validators.required, Validators.pattern(/^(\d{2}\/){2}\d{4}$/)],
+      ],
       password: [null, [Validators.required]],
       title: [null, [Validators.required]],
       registeredBy: [null, [Validators.required]],
@@ -94,7 +98,7 @@ export class EmployeeFormComponent implements OnInit {
   sendEmployee(): void {
     const form = this.formGroup.value;
     // form.birthdate = dateFormatter(this.formGroup.controls.birthdate.value);
-    form.birthdate = dateParser(form.birthdate)
+    // form.birthdate = dateParser(form.birthdate);
     try {
       if (!this.isUpdating) {
         this.createEmployee.next(form);
@@ -112,7 +116,7 @@ export class EmployeeFormComponent implements OnInit {
     this.formGroup.patchValue({ title: employee.title.id });
     this.formGroup.patchValue({ status: employee.status.id });
     this.formGroup.patchValue({ registeredBy: employee.registeredBy?.id });
-    this.formGroup.patchValue({ birthdate: parseFromISOToLocaleDate(employee.birthdate) })
+    // this.formGroup.patchValue({ birthdate: parseFromISOToLocaleDate(employee.birthdate) })
   }
 
   resetForm(): void {
@@ -120,14 +124,14 @@ export class EmployeeFormComponent implements OnInit {
     this.isUpdating = false;
   }
 
-  teste(): void {
-    console.log(this.formGroup.get('id').errors);
-    console.log(this.formGroup.get('name').errors);
-    console.log(this.formGroup.get('email').errors);
-    console.log(this.formGroup.get('status').errors);
-    console.log(this.formGroup.get('birthdate').errors);
-    console.log(this.formGroup.get('password').errors);
-    console.log(this.formGroup.get('title').errors);
-    console.log(this.formGroup.get('registeredBy').errors);
-  }
+  // teste(): void {
+  //   console.log(this.formGroup.get('id').errors);
+  //   console.log(this.formGroup.get('name').errors);
+  //   console.log(this.formGroup.get('email').errors);
+  //   console.log(this.formGroup.get('status').errors);
+  //   console.log(this.formGroup.get('birthdate').errors);
+  //   console.log(this.formGroup.get('password').errors);
+  //   console.log(this.formGroup.get('title').errors);
+  //   console.log(this.formGroup.get('registeredBy').errors);
+  // }
 }
