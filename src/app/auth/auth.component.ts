@@ -28,8 +28,8 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required]], // hr@brighteyes.com
-      password: ['', [Validators.required]], // senha123
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
     });
     this.loading = false;
   }
@@ -49,10 +49,18 @@ export class AuthComponent implements OnInit {
           this.loading = false;
         },
         ({ error }: HttpErrorResponse) => {
-          alert(error.message);
+          alert('Credentials invalid or missing');
           console.error(error.message);
           this.loading = false;
         }
       );
+  }
+
+  isValid(attr: string): string {
+    return this.loginForm.get(attr).valid ? 'is-valid' : 'is-invalid';
+  }
+
+  showInvalidFeedback(attr: string): boolean {
+    return this.isValid(attr) === 'is-invalid' ? true : false;
   }
 }

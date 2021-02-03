@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-6">
             <form (submit)='login()' [formGroup]='loginForm'>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="exampleInputEmail1">Email address</label>
                     <input 
                         formControlName='email'
@@ -12,19 +12,69 @@
                         aria-describedby="emailHelp"
                         placeholder="Enter email">
                     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                </div>
+                </div> -->
+
                 <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input 
-                        formControlName='password'
-                        type="password" 
-                        class="form-control" 
-                        id="exampleInputPassword1" 
-                        placeholder="Password">
+
+                    <label for="email" class="col-form-label">E-mail</label>
+                    <input
+                      [ngClass]='[isValid("email")]'
+                      formControlName="email"
+                      type="text"
+                      class="form-control"
+                      id="email"
+                      placeholder="employee@email.com"/>
+            
+                    <!-- invalid data feedback -->
+                    <div 
+                        class="invalid-feedback" 
+                        *ngIf='showInvalidFeedback("email"); else validFeedbackEmail'>
+                            <span *ngIf=' loginForm.get("email").errors?.required'>Email is required</span>
+                            <span *ngIf='loginForm.get("email").errors?.email'>Email is invalid</span>
+                    </div>
+
+            
+                    <!-- valid data feedback -->
+                    <ng-template #validFeedbackEmail>
+                      <div 
+                        class="valid-feedback" 
+                        *ngIf='!showInvalidFeedback("email")'>
+                          <small>ok</small>
+                      </div>
+                    </ng-template>
+                </div>
+
+                <div class="form-group">
+
+                    <label for="password" class="col-form-label">Password</label>
+                    <input
+                      [ngClass]='[isValid("password")]'
+                      formControlName="password"
+                      type="password"
+                      class="form-control"
+                      id="password"
+                      placeholder="*****"/>
+            
+                    <!-- invalid data feedback -->
+                    <div 
+                        class="invalid-feedback" 
+                        *ngIf='showInvalidFeedback("password"); else validFeedbackPassword'>
+                            <span *ngIf=' loginForm.get("password").errors?.required'>Password is required</span>
+                    </div>
+
+                    <!-- valid data feedback -->
+                    <ng-template #validFeedbackPassword>
+                      <div 
+                        class="valid-feedback" 
+                        *ngIf='!showInvalidFeedback("password")'>
+                          <small>ok</small>
+                      </div>
+                    </ng-template>
                 </div>
         
                 <div id="buttons" class="mt-5">
                     <button  
+                        [disabled]='loginForm.invalid'
                         type="submit" 
                         class="btn btn-primary btn-block p-4">
 
