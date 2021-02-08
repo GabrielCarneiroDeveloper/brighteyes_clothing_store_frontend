@@ -51,6 +51,7 @@ export class AuthComponent implements OnInit {
         ({ error }: HttpErrorResponse) => {
           alert('Credentials invalid or missing');
           console.error(error.message);
+          this.loginForm.reset();
           this.loading = false;
         }
       );

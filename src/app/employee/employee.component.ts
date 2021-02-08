@@ -103,6 +103,8 @@ export class EmployeeComponent implements OnInit {
       },
       ({ error }: HttpErrorResponse) => {
         console.error(error);
+        this.employeeForm.formGroup.patchValue({ email: '' });
+        alert(error.error_message);
       }
     );
   }
