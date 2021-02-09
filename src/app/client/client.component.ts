@@ -50,6 +50,8 @@ export class ClientComponent implements OnInit {
       },
       ({ error }: HttpErrorResponse) => {
         console.error(error);
+        alert(error.error_message);
+        this.clientForm.formGroup.patchValue({ cpf: '' });
       }
     );
   }
@@ -74,6 +76,8 @@ export class ClientComponent implements OnInit {
       },
       ({ error }: HttpErrorResponse) => {
         console.error(error.message);
+        alert(error.error_message);
+        this.clientForm.formGroup.patchValue({ cpf: '' });
       }
     );
   }
