@@ -30,9 +30,8 @@ export class ClothesFormComponent implements OnInit {
   isUpdating: boolean;
   uploader: FileUploader;
 
-  @ViewChild('photo', { static: false }) photoInput: ElementRef<
-    HTMLInputElement
-  >;
+  @ViewChild('photo', { static: false })
+  photoInput: ElementRef<HTMLInputElement>;
 
   @Input() statusList: Observable<ClothesStatus[]>;
 
@@ -68,7 +67,6 @@ export class ClothesFormComponent implements OnInit {
           };
           this.formGroup.patchValue({ photo: resp.filename });
           this.createObject.next(this.formGroup.value);
-          this.resetForm();
         };
       } else {
         this.updateObject.next(this.formGroup.value);

@@ -39,10 +39,13 @@ export class ClothesComponent implements OnInit {
     this.clothesService.create(formValue).subscribe(
       () => {
         console.log('Clothes created successfully');
+        this.clothesForm.resetForm();
         this.getClothesList();
       },
       ({ error }: HttpErrorResponse) => {
         console.error(error);
+        alert(error.error_message);
+        this.clothesForm.formGroup.patchValue({ name: '' });
       }
     );
   }
@@ -69,7 +72,8 @@ export class ClothesComponent implements OnInit {
         this.getClothesList();
       },
       ({ error }: HttpErrorResponse) => {
-        console.error(error.message);
+        alert(error.error_message);
+        this.clothesForm.formGroup.patchValue({ name: '' });
       }
     );
   }
