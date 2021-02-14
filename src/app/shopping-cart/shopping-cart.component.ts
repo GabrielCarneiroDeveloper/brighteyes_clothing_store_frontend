@@ -1,7 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Client } from '../client/client.interfaces';
+import { map } from 'rxjs/operators';
+import { Client, ClientStatusEnum } from '../client/client.interfaces';
 import { ClientService } from '../client/client.service';
 import { Employee } from '../employee/employee.models';
 import { EmployeeService } from '../employee/employee.service';
@@ -41,7 +42,13 @@ export class ShoppingCartComponent implements OnInit {
     this.loadShoppingCartList();
     this.shoppingCartStatusList$ = this.shoppingCartService.getStatusList();
     this.sellerEmployeeList = this.employeeService.getList().toPromise();
-    this.clientList$ = this.clientService.list();
+    this.clientList$ = this.clientService
+      .list()
+      .pipe(
+        map((cList) =>
+          cList.filter((c) => c.status.name === ClientStatusEnum.ACTIVATED)
+        )
+      );
     this.loadingService.stop();
   }
 
