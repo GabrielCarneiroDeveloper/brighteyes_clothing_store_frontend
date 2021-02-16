@@ -12,10 +12,16 @@ import {
 import { environment } from './../../environments/environment';
 import { SharedModule } from '../shared/shared.module';
 
+import { LOCALE_ID } from '@angular/core';
+
 @NgModule({
   declarations: [HotPageComponent],
   imports: [CommonModule, IndexModule, HotPageRoutingModule, SharedModule],
   providers: [
+    {
+      provide: LOCALE_ID,
+      useValue: 'pt-BR',
+    },
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
