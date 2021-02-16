@@ -1,17 +1,106 @@
-<div id="header">
-    <a class="btn btn-default" [routerLink]="['home']">Home</a>
-    <!-- <span class="h4">Welcome, {{ session.username }} ({{ session.title }})</span> -->
-    <!-- <button (click)='logOut()' class="btn btn-default pull-right">Logout</button> -->
-    
-    <div>
-        <button 
-            class="btn btn-default"
-            mat-button 
-            [matMenuTriggerFor]="menu">Menu ({{ session.title }})
-        </button>
+<div *ngIf="!mobileQuery.matches; else mobileSideNav">
+    <div id="header">
+        <a class="btn btn-default" [routerLink]="['home']">Home</a>
         
-        <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)='logOut()'>Logout</button>
-        </mat-menu>
+        <div>
+            <button 
+                class="btn btn-default"
+                mat-button 
+                [matMenuTriggerFor]="menu">Menu ({{ session.title }})
+            </button>
+            
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)='logOut()'>Logout</button>
+            </mat-menu>
+        </div>
     </div>
 </div>
+
+<ng-template #mobileSideNav>
+  <div 
+  class="example-container" 
+  [class.example-is-mobile]="mobileQuery.matches">
+    <mat-toolbar 
+      color="primary" 
+      class="example-toolbar">
+        <button 
+          mat-icon-button 
+          (click)="snav.toggle()"><mat-icon>menu</mat-icon>
+        </button>
+
+        <div style="display: flex;align-items: center; justify-content: space-between; width: 100vw; ">
+          <span style="font-size: 12pt">{{ session.title }}</span>
+          <a (click)='logOut()' style='display: flex; align-items: initial;'>
+            <span style="margin-right: 0.5em; font-size: 12pt">Logout</span> 
+            <mat-icon inline>logout</mat-icon> 
+          </a>
+      </div>
+
+      
+    </mat-toolbar>
+
+  <mat-sidenav-container 
+    class="example-sidenav-container"
+    [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+      <mat-sidenav 
+        #snav 
+        [fixedInViewport]="mobileQuery.matches" 
+        fixedTopGap="56">
+          <mat-nav-list>
+
+            <a 
+              mat-list-item
+              href="#"
+              [routerLink]="['home']"><mat-icon>house</mat-icon> Home
+            </a>
+
+
+            <a 
+              mat-list-item 
+              *ngIf="session.title === 'Seller' || session.title === 'Admin'"
+              href="#"
+              [routerLink]="['/shopping-cart']"><mat-icon>shopping_cart</mat-icon> Perform sell
+            </a>
+
+            <a 
+              mat-list-item 
+              href="#"
+              *ngIf="session.title === 'Cashier' || session.title === 'Admin'"
+              [routerLink]="['/cashier']"
+              mat-list-item ><mat-icon>attach_money</mat-icon> Operate cash
+            </a>
+
+            <a
+              mat-list-item 
+              *ngIf="session.title === 'Customer Service' || session.title === 'Admin'"
+              href="#"
+              [routerLink]="['/client']" 
+              mat-list-item ><mat-icon>person</mat-icon> Client
+            </a>
+
+            <a
+              mat-list-item 
+              *ngIf="session.title === 'Warehouse' || session.title === 'Admin'"
+              href="#"
+              [routerLink]="['/clothes']" 
+              mat-list-item ><mat-icon>shopping_bag</mat-icon> Clothes
+            </a>
+
+            <a 
+              mat-list-item
+              *ngIf="session.title === 'Human Resource' || session.title === 'Admin'"
+              href="#"
+              [routerLink]="['/employee']"><mat-icon>supervised_user_circle</mat-icon> Employees
+            </a>
+
+            <mat-divider></mat-divider>
+
+            
+          </mat-nav-list>
+          
+    </mat-sidenav>
+
+
+  </mat-sidenav-container>
+</div>
+</ng-template>

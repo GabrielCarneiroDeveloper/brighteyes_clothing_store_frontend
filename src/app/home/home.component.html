@@ -1,5 +1,6 @@
 <app-loading ></app-loading>
 <div class="d-flex" id="wrapper">
+
 	<div class="bg-light border-right" id="sidebar-wrapper">
 	  	<div class="sidebar-heading"> <br></div>
 		<div class="list-group list-group-flush">	
@@ -7,31 +8,31 @@
 				*ngIf="session.title === 'Seller' || session.title === 'Admin'"
 				href="#"
 				[routerLink]="['/shopping-cart']"
-				class="list-group-item list-group-item-action bg-light">Perform sell</a>
+				class="list-group-item list-group-item-action bg-light"><mat-icon>shopping_cart</mat-icon> Perform sell</a>
 
 			<a 
 				href="#"
 				*ngIf="session.title === 'Cashier' || session.title === 'Admin'"
 				[routerLink]="['/cashier']"
-				class="list-group-item list-group-item-action bg-light">Operate cash</a>
+				class="list-group-item list-group-item-action bg-light"><mat-icon>attach_money</mat-icon> Operate cash</a>
 
 			<a 
 				*ngIf="session.title === 'Customer Service' || session.title === 'Admin'"
 				href="#"
 				[routerLink]="['/client']" 
-				class="list-group-item list-group-item-action bg-light">Client</a>
+				class="list-group-item list-group-item-action bg-light"><mat-icon>person</mat-icon> Client</a>
 
 			<a 
 				*ngIf="session.title === 'Warehouse' || session.title === 'Admin'"
 				href="#"
 				[routerLink]="['/clothes']" 
-				class="list-group-item list-group-item-action bg-light">Clothes</a>
+				class="list-group-item list-group-item-action bg-light"><mat-icon>shopping_bag</mat-icon> Clothes</a>
 
 			<a 
 				*ngIf="session.title === 'Human Resource' || session.title === 'Admin'"
 				href="#"
 				[routerLink]="['/employee']" 
-				class="list-group-item list-group-item-action bg-light">Employees</a>
+				class="list-group-item list-group-item-action bg-light"><mat-icon>supervised_user_circle</mat-icon> Employees</a>
 		</div>
 	</div>
 
