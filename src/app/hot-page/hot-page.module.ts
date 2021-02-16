@@ -10,10 +10,11 @@ import {
   SocialLoginModule,
 } from 'angularx-social-login';
 import { environment } from './../../environments/environment';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [HotPageComponent],
-  imports: [CommonModule, IndexModule, HotPageRoutingModule],
+  imports: [CommonModule, IndexModule, HotPageRoutingModule, SharedModule],
   providers: [
     {
       provide: 'SocialAuthServiceConfig',
