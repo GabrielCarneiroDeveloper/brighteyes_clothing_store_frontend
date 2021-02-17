@@ -31,38 +31,41 @@
     <div class="jumbotron jumbotron-fluid text-center">
       <div class="container">
         <h1 class="display-1">Welcome</h1>
+        <p *ngIf='!user'>If you want see clothes prices and available quantity, please login in using your Google account</p>
         <!-- <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p> -->
       </div>
     </div>
    
     <!-- card -->
     <div class="content container">
-      <div id="card-group">
-        <div 
-          [ngClass]='{"disabled": outOfStock(clothes)}'
-          *ngFor="let clothes of clothesList$ | async as list" class="card">
-          <div id='disabled-panel'>
-          </div>
+        <div id="card-group">
+          <div 
+            [ngClass]='{"disabled": outOfStock(clothes)}'
+            *ngFor="let clothes of clothesList$ | async as list" class="card">
+              <div id='disabled-panel'></div>
 
-          <div class="text-center pt-2 pb-2">
-            <span class="font-weight-bold">{{ clothes.name }}</span>
+              <div class="text-center pt-2 pb-2">
+                <span class="font-weight-bold">{{ clothes.name }}</span>
+              </div>
+              <img 
+                class="card-img-top" 
+                [src]="clothes.photo" 
+                alt="Card image cap">
+
+              <div class="card-body">
+                <div class="card-text">
+                  <p *ngIf='user; else notLoggedUserClothesPrice'>{{ getFormattedPrice(clothes.price) }}</p>
+                  <ng-template #notLoggedUserClothesPrice>
+                    <p>R$ ...</p>
+                  </ng-template>
+                  <p *ngIf="clothes.quantityInStock > 0; else outOfStockMessage">
+                    Available quantity: 
+                      <span *ngIf='user;'>{{ clothes.quantityInStock }}</span>
+                  </p>
+                  <ng-template #outOfStockMessage><p>OUT OF STOCK</p></ng-template>
+                </div>
+              </div>
           </div>
-          <img 
-            class="card-img-top" 
-            [src]="clothes.photo" 
-            alt="Card image cap">
-          <div class="card-body">
-            <div class="card-text">
-              <p>{{ getFormattedPrice(clothes.price) }}</p>
-              <p *ngIf="clothes.quantityInStock > 0; else outOfStockMessage">
-                Available quantity: {{ clothes.quantityInStock }}
-              </p>
-              <ng-template #outOfStockMessage>
-                <p>OUT OF STOCK</p>
-              </ng-template>
-            </div>
-          </div>
-        </div>
     </div>
     </div>
       

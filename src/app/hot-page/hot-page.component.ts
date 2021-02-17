@@ -27,15 +27,17 @@ export class HotPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.hotPageService.getUser().subscribe((user) => {
+      this.user = user;
+      this.loggedIn = user != null;
+    });
+
     this.clothesList$ = this.hotPageService
       .clothesList()
       .pipe(map((clothesList) => this.sortClothesByStock(clothesList)))
       .pipe(finalize(() => this.loadingService.stop()));
 
-    this.hotPageService.getUser().subscribe((user) => {
-      this.user = user;
-      this.loggedIn = user != null;
-    });
+    this.loadingService.stop();
   }
 
   sortClothesByStock(clothesList: Clothes[]): Clothes[] {
