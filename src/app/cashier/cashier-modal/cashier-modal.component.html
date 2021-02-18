@@ -7,30 +7,28 @@
   class="modal fade"
   tabindex="-1"
   role="dialog"
-  aria-labelledby="dialog-sizes-name1"
->
+  aria-labelledby="dialog-sizes-name1">
+
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 id="dialog-sizes-name1" class="modal-title pull-left">
+        <!-- <h4 id="dialog-sizes-name1" class="modal-title pull-left">
           Large modal
-        </h4>
+        </h4> -->
         <button
           type="button"
           class="close pull-right"
           (click)="lgModal.hide()"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
+          aria-label="Close"><span aria-hidden="true">&times;</span>
         </button>
       </div>
       
       <div class="modal-body">
 
-        <div class="mt-5">
+        <div>
           <h2>Cothes list</h2>
 
-          <table *ngIf="shoppingCart.clothes" class="table">
+          <table *ngIf="shoppingCart.clothes" class="table table-responsive-lg">
             <thead class="thead-dark">
               <tr style="align-items: center;">
                 <th scope="col">#</th>
@@ -43,7 +41,7 @@
               <tr *ngFor="let clothes of shoppingCart.clothes">
                 <th scope="row">{{ clothes.id }}</th>
                 <td>{{ clothes.name }}</td>
-                <td>{{ clothes.price }}</td>
+                <td>{{ getFormattedPrice(clothes.price) }}</td>
                 <td>
                   <a
                     target="_blank"
@@ -58,7 +56,7 @@
 
         <section class="mt-5" style="display: flex; justify-content: space-between;">
           <div style="align-items: flex-end;">
-            <span style='font-size: 20pt; font-weight: 700;'>Total: R$ {{ totalCost }}</span>
+            <span style='font-size: 20pt; font-weight: 700;'>Total: {{ getFormattedPrice(totalCost) }}</span>
           </div>
         </section>
 

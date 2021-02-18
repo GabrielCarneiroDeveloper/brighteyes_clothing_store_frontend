@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Clothes } from 'src/app/clothes/clothes.interface';
 import { ShoppingCart } from 'src/app/shopping-cart/shopping-cart.interface';
 import { calcTotalCost } from './../../common/calcTotalCost';
-import { parseFromISOToLocaleDate } from './../../common/dateFormatter'
+import { parseFromISOToLocaleDate } from './../../common/dateFormatter';
 
 @Component({
   selector: 'app-cashier-table',
@@ -19,8 +19,6 @@ export class CashierTableComponent implements OnInit {
     shoppingCartId: number;
   }>();
 
-  constructor() {}
-
   ngOnInit(): void {}
 
   totalValue(clothes: Clothes[]): number {
@@ -32,6 +30,13 @@ export class CashierTableComponent implements OnInit {
   }
 
   parseIsoToLocale(s: string) {
-    return parseFromISOToLocaleDate(s)
+    return parseFromISOToLocaleDate(s);
+  }
+
+  getFormattedPrice(price: number) {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    }).format(price);
   }
 }

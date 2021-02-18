@@ -17,7 +17,7 @@
       <tr *ngFor="let clothes of clothesList | async as list">
         <th scope="row">{{ clothes.id }}</th>
         <td>{{ clothes.name }}</td>
-        <td>R$ {{ clothes.price | number: "1.2" }}</td>
+        <td>{{ getFormattedPrice(clothes.price) }}</td>
         <td>{{ clothes.quantityInStock }}</td>
         <td>{{ clothes.status.name }}</td>
         <td>{{ clothes.photo }}</td>

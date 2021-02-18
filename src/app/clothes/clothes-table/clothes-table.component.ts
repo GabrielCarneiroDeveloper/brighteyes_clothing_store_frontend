@@ -23,4 +23,11 @@ export class ClothesTableComponent {
   updateButtonClicked(clothes: ClothesListDTO): void {
     this.findOne.next(clothes);
   }
+
+  getFormattedPrice(price: number) {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    }).format(price);
+  }
 }

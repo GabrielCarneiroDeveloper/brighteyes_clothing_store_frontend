@@ -28,12 +28,10 @@
             <td>{{ object.seller.name }}</td>
             <td>{{ object.status.name }}</td>
             <td>
-              <app-cashier-modal
-                [shoppingCart]="object"
-              ></app-cashier-modal>
+              <app-cashier-modal [shoppingCart]="object"></app-cashier-modal>
             </td>
             <td>{{ parseIsoToLocale(object.createdAt) }}</td>
-            <td>{{ totalValue(object?.clothes) }}</td>
+            <td>{{ getFormattedPrice(totalValue(object?.clothes)) }}</td>
             <td>
               <app-cashier-modal-finish-purchase
                 (sendPayment)='sendPayment($event)'

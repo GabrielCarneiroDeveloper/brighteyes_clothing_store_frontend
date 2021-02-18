@@ -37,8 +37,15 @@ export class CashierModalComponent implements OnInit {
   }
 
   fixClothesPhotoAddress(clothes: Clothes) {
-    return clothes.photo.includes('http') ? 
-      clothes.photo : 
-      `${environment.BACKEND_ADDRESS}/images/clothes/${clothes.photo}`
+    return clothes.photo.includes('http')
+      ? clothes.photo
+      : `${environment.BACKEND_ADDRESS}/images/clothes/${clothes.photo}`;
+  }
+
+  getFormattedPrice(price: number) {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    }).format(price);
   }
 }

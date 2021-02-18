@@ -28,7 +28,7 @@
         <div>
           <form 
             [formGroup]='formGroup' 
-            class="mt-5" 
+            class="mt-2" 
             action="">
             <div class="form-group">
               <div class="row">
@@ -38,7 +38,7 @@
                     value='{{ searchInputValue }}' 
                     type="number" 
                     class="form-control" 
-                    placeholder="Type clothes ID">
+                    placeholder="Type clothes ID to include it">
                 </div>
                 <div class="col-md-2">
                   <button 
@@ -55,7 +55,7 @@
         <div class="mt-5">
           <h2>Cothes list</h2>
 
-          <table *ngIf="shoppingCart.clothes" class="table">
+          <table *ngIf="shoppingCart.clothes" class="table table-responsive-md">
             <thead class="thead-dark">
               <tr style="align-items: center;">
                 <th scope="col">#</th>
@@ -69,7 +69,7 @@
               <tr *ngFor="let clothes of shoppingCart.clothes">
                 <th scope="row">{{ clothes.id }}</th>
                 <td>{{ clothes.name }}</td>
-                <td>{{ clothes.price }}</td>
+                <td>{{ getFormattedPrice(clothes.price) }}</td>
                 <td>
                   <a
                     target="_blank"
@@ -94,7 +94,7 @@
 
         <section class="mt-5" style="display: flex; justify-content: space-between;">
           <div style="align-items: flex-end;">
-            <span style='font-size: 20pt; font-weight: 700;'>Total: R$ {{ totalCost }}</span>
+            <span style='font-size: 20pt; font-weight: 700;'>Total: {{ getFormattedPrice(totalCost) }}</span>
           </div>
         </section>
 
