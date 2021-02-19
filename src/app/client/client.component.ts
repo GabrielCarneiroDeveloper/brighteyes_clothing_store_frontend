@@ -55,16 +55,6 @@ export class ClientComponent implements OnInit {
     );
   }
 
-  async removeClient(client: ClientListDTO): Promise<void> {
-    const response = await this.clientService.remove(client.id);
-    response.subscribe(
-      () => this.getClientList(),
-      ({ error }: HttpErrorResponse) => {
-        console.error(error);
-      }
-    );
-  }
-
   updateClient(client: ClientUpdateDTO): void {
     this.clientService.update(client).subscribe(
       (response) => {

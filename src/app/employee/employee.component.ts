@@ -3,14 +3,13 @@ import { Observable } from 'rxjs';
 import { Employee } from './employee.models';
 import {
   EmployeeCreateDTO,
-  EmployeeRemoveDTO,
   EmployeeStatus,
   EmployeeTitle,
   EmployeeUpdateDTO,
 } from './employee.interfaces';
 import { EmployeeService } from './employee.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { EmployeeStatusEnum, EmployeeTitleEnum } from './employee.enum';
+import { EmployeeTitleEnum } from './employee.enum';
 import { EmployeeFormComponent } from './employee-form/employee-form.component';
 import { LoadingService } from '../shared/loading/loading.service';
 import { finalize, tap } from 'rxjs/operators';
@@ -78,23 +77,6 @@ export class EmployeeComponent implements OnInit {
     );
   }
 
-  async remove(employee: EmployeeRemoveDTO): Promise<void> {
-    const response = await this.employeeService.remove(employee);
-    response
-      .pipe(
-        tap(() => this.loadingService.start()),
-        finalize(() => this.loadingService.stop())
-      )
-      .subscribe(
-        ({ message }) => {
-          this.getEmployeeList();
-        },
-        ({ error }: HttpErrorResponse) => {
-          console.error(error);
-        }
-      );
-  }
-
   update(employee: Partial<Employee>): void {
     this.employeeService.update(employee).subscribe(
       ({ message }) => {
@@ -121,5 +103,20 @@ export class EmployeeComponent implements OnInit {
     } catch (error) {
       throw new Error(error.message);
     }
+  }
+
+  async changeStatus(employee: EmployeeUpdateDTO): Promise<void> {
+    const response = await this.employeeService.changeStatus(employee);
+
+    response.subscribe(
+      () => {
+        this.employeeForm.resetForm();
+        this.getEmployeeList();
+      },
+      ({ error }: HttpErrorResponse) => {
+        console.error(error.message);
+        alert(error.error_message);
+      }
+    );
   }
 }

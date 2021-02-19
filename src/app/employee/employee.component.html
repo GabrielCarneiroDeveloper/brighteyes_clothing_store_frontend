@@ -10,7 +10,7 @@
     </app-employee-form>
 
     <app-employee-table 
-        (removeObject)='remove($event)'
+        (changeStatus)='changeStatus($event)'
         (findOne)='findOne($event)'
         [employeeList]='employeeList' >
     </app-employee-table>

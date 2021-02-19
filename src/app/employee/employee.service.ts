@@ -9,6 +9,7 @@ import {
   EmployeeCreateDTO,
   EmployeeTitle,
   EmployeeRemoveDTO,
+  EmployeeUpdateDTO,
 } from './employee.interfaces';
 import { SuccessfullyResponse } from './../common/interfaces';
 
@@ -89,6 +90,32 @@ export class EmployeeService {
   getOne(employeeId: number): Observable<Employee> {
     return this.httpClient.get<Employee>(
       `${environment.BACKEND_ADDRESS}/employees/` + employeeId
+    );
+  }
+
+  async changeStatus(
+    employee: EmployeeUpdateDTO
+  ): Promise<Observable<UpdatedSuccessfullyResponse>> {
+    const statusList = await this.getStatusList().toPromise();
+
+    const deactivatedStatus = statusList.filter(
+      (status) => status.name === 'DEACTIVATED'
+    )[0];
+    const activatedStatus = statusList.filter(
+      (status) => status.name === 'ACTIVATED'
+    )[0];
+
+    if (employee.status.name === activatedStatus.name) {
+      employee.status = deactivatedStatus;
+    } else {
+      employee.status = activatedStatus;
+    }
+
+    return this.httpClient.put<UpdatedSuccessfullyResponse>(
+      `${environment.BACKEND_ADDRESS}/employees/` + employee.id,
+      {
+        status: employee.status.id,
+      }
     );
   }
 }

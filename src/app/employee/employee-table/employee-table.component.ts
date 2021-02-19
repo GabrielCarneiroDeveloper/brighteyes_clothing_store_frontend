@@ -21,9 +21,9 @@ import { parseFromISOToLocaleDate } from 'src/app/common/dateFormatter';
 export class EmployeeTableComponent implements OnDestroy {
   @Input() employeeList: Observable<Employee[]>;
 
-  @Output() removeObject = new EventEmitter<EmployeeRemoveDTO>();
   @Output() findOne = new EventEmitter<EmployeeUpdateDTO>();
   @Output() startLoading = new EventEmitter<void>();
+  @Output() changeStatus = new EventEmitter<EmployeeUpdateDTO>();
 
   value: string = '';
   debounce: Subject<string> = new Subject<string>();
@@ -44,15 +44,15 @@ export class EmployeeTableComponent implements OnDestroy {
     this.debounce.unsubscribe();
   }
 
-  removeButtonClicked(employee: EmployeeRemoveDTO) {
-    this.removeObject.next(employee);
-  }
-
   updateButtonClicked(employee: EmployeeUpdateDTO) {
     this.findOne.next(employee);
   }
 
   parseIsoToLocale(date: string) {
     return parseFromISOToLocaleDate(date);
+  }
+
+  changeStatusButtonClicked(employee: EmployeeUpdateDTO) {
+    this.changeStatus.next(employee);
   }
 }

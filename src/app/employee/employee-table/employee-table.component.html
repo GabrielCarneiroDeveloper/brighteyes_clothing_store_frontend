@@ -27,12 +27,15 @@
             (click)="updateButtonClicked(employee)"
             class="btn btn-primary btn-block">Update
           </button>
-          
+
           <button
-            [disabled]="employee.status.name === 'DEACTIVATED'"
-            (click)="removeButtonClicked(employee)"
-            class="btn btn-danger btn-block">Deactivate
-          </button>
+          (click)="changeStatusButtonClicked(employee)"
+          [ngClass]='{ 
+            "btn-danger": employee.status.name !== "DEACTIVATED", 
+            "btn-success": employee.status.name === "DEACTIVATED" }'
+          class="btn btn-block">{{ employee.status.name !== 'DEACTIVATED' ? 'Deactivate' : 'Activate'  }}
+        </button>
+        
         </td>
       </tr>
     </tbody>
