@@ -778,9 +778,14 @@ class AuthComponent {
             this.sessionService.createSession(token);
             this.router.navigate(['home']);
             this.loading = false;
-        }, ({ error }) => {
-            alert('Credentials invalid or missing');
-            console.error(error.message);
+        }, ({ error, status }) => {
+            if (status === 401) {
+                alert(error.message);
+            }
+            else {
+                alert('Credentials invalid or missing');
+            }
+            // console.error(error);
             this.loginForm.reset();
             this.loading = false;
         });
@@ -2736,6 +2741,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+const _c0 = function (a0, a1) { return { "btn-danger": a0, "btn-success": a1 }; };
 function ClientTableComponent_table_3_tr_18_Template(rf, ctx) { if (rf & 1) {
     const _r5 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "tr");
@@ -2763,8 +2769,8 @@ function ClientTableComponent_table_3_tr_18_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](15, "Update ");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](16, "button", 7);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function ClientTableComponent_table_3_tr_18_Template_button_click_16_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r5); const client_r2 = ctx.$implicit; const ctx_r6 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2); return ctx_r6.removeButtonClicked(client_r2); });
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](17, "Deactivate ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function ClientTableComponent_table_3_tr_18_Template_button_click_16_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r5); const client_r2 = ctx.$implicit; const ctx_r6 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2); return ctx_r6.changeStatusButtonClicked(client_r2); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](17);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -2783,7 +2789,9 @@ function ClientTableComponent_table_3_tr_18_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](client_r2.status.name);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("disabled", client_r2.status.name === "DEACTIVATED");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction2"](8, _c0, client_r2.status.name !== "DEACTIVATED", client_r2.status.name === "DEACTIVATED"));
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("", client_r2.status.name !== "DEACTIVATED" ? "Deactivate" : "Activate", " ");
 } }
 function ClientTableComponent_table_3_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "table", 1);
@@ -2813,7 +2821,7 @@ function ClientTableComponent_table_3_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](17, "tbody");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](18, ClientTableComponent_table_3_tr_18_Template, 18, 7, "tr", 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](18, ClientTableComponent_table_3_tr_18_Template, 18, 11, "tr", 4);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](19, "async");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -2824,21 +2832,21 @@ function ClientTableComponent_table_3_Template(rf, ctx) { if (rf & 1) {
 } }
 class ClientTableComponent {
     constructor() {
-        this.removeObject = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.findOne = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
-    }
-    removeButtonClicked(client) {
-        this.removeObject.next(client);
+        this.changeStatus = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
     }
     updateButtonClicked(client) {
         this.findOne.next(client);
+    }
+    changeStatusButtonClicked(client) {
+        this.changeStatus.next(client);
     }
     parseIsoToLocale(date) {
         return Object(_common_dateFormatter__WEBPACK_IMPORTED_MODULE_2__["parseFromISOToLocaleDate"])(date);
     }
 }
 ClientTableComponent.ɵfac = function ClientTableComponent_Factory(t) { return new (t || ClientTableComponent)(); };
-ClientTableComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: ClientTableComponent, selectors: [["app-client-table"]], inputs: { clientList: "clientList" }, outputs: { removeObject: "removeObject", findOne: "findOne" }, decls: 4, vars: 1, consts: [["class", "table table-responsive-lg table-hover", 4, "ngIf"], [1, "table", "table-responsive-lg", "table-hover"], [1, "thead-dark"], ["scope", "col"], [4, "ngFor", "ngForOf"], ["scope", "row"], [1, "btn", "btn-primary", "btn-block", 3, "click"], [1, "btn", "btn-danger", "btn-block", 3, "disabled", "click"]], template: function ClientTableComponent_Template(rf, ctx) { if (rf & 1) {
+ClientTableComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: ClientTableComponent, selectors: [["app-client-table"]], inputs: { clientList: "clientList" }, outputs: { findOne: "findOne", changeStatus: "changeStatus" }, decls: 4, vars: 1, consts: [["class", "table table-responsive-lg table-hover", 4, "ngIf"], [1, "table", "table-responsive-lg", "table-hover"], [1, "thead-dark"], ["scope", "col"], [4, "ngFor", "ngForOf"], ["scope", "row"], [1, "btn", "btn-primary", "btn-block", 3, "click"], [1, "btn", "btn-block", 3, "ngClass", "click"]], template: function ClientTableComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "section");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "h2");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "Client list");
@@ -2848,7 +2856,7 @@ ClientTableComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdef
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.clientList);
-    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["NgForOf"]], pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["AsyncPipe"]], styles: [".at-hover[_ngcontent-%COMP%]:hover {\n  background-color: lightgrey;\n  cursor: pointer;\n}\n\n.buttons-pdf-excel[_ngcontent-%COMP%] {\n  text-align: right;\n  margin-bottom: 1em;\n}\n\n.buttons-pdf-excel[_ngcontent-%COMP%]   .btn[_ngcontent-%COMP%] {\n  padding-left: 2em;\n  padding-right: 2em;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY2xpZW50L2NsaWVudC10YWJsZS9jbGllbnQtdGFibGUuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBS0E7RUFDRSwyQkFBQTtFQUNBLGVBQUE7QUFKRjs7QUFPQTtFQUNFLGlCQUFBO0VBQ0Esa0JBQUE7QUFKRjs7QUFNRTtFQUNFLGlCQUFBO0VBQ0Esa0JBQUE7QUFKSiIsImZpbGUiOiJzcmMvYXBwL2NsaWVudC9jbGllbnQtdGFibGUvY2xpZW50LXRhYmxlLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLy8gLmF0LWhvdmVyOmhvdmVyIHtcbi8vICAgYmFja2dyb3VuZC1jb2xvcjogbGlnaHRncmV5O1xuLy8gICBjdXJzb3I6IHBvaW50ZXI7XG4vLyB9XG5cbi5hdC1ob3Zlcjpob3ZlciB7XG4gIGJhY2tncm91bmQtY29sb3I6IGxpZ2h0Z3JleTtcbiAgY3Vyc29yOiBwb2ludGVyO1xufVxuXG4uYnV0dG9ucy1wZGYtZXhjZWwge1xuICB0ZXh0LWFsaWduOiByaWdodDtcbiAgbWFyZ2luLWJvdHRvbTogMWVtO1xuXG4gIC5idG4ge1xuICAgIHBhZGRpbmctbGVmdDogMmVtO1xuICAgIHBhZGRpbmctcmlnaHQ6IDJlbTtcbiAgfVxufVxuIl19 */"] });
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["NgForOf"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["NgClass"]], pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["AsyncPipe"]], styles: [".at-hover[_ngcontent-%COMP%]:hover {\n  background-color: lightgrey;\n  cursor: pointer;\n}\n\n.buttons-pdf-excel[_ngcontent-%COMP%] {\n  text-align: right;\n  margin-bottom: 1em;\n}\n\n.buttons-pdf-excel[_ngcontent-%COMP%]   .btn[_ngcontent-%COMP%] {\n  padding-left: 2em;\n  padding-right: 2em;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY2xpZW50L2NsaWVudC10YWJsZS9jbGllbnQtdGFibGUuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBS0E7RUFDRSwyQkFBQTtFQUNBLGVBQUE7QUFKRjs7QUFPQTtFQUNFLGlCQUFBO0VBQ0Esa0JBQUE7QUFKRjs7QUFNRTtFQUNFLGlCQUFBO0VBQ0Esa0JBQUE7QUFKSiIsImZpbGUiOiJzcmMvYXBwL2NsaWVudC9jbGllbnQtdGFibGUvY2xpZW50LXRhYmxlLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLy8gLmF0LWhvdmVyOmhvdmVyIHtcbi8vICAgYmFja2dyb3VuZC1jb2xvcjogbGlnaHRncmV5O1xuLy8gICBjdXJzb3I6IHBvaW50ZXI7XG4vLyB9XG5cbi5hdC1ob3Zlcjpob3ZlciB7XG4gIGJhY2tncm91bmQtY29sb3I6IGxpZ2h0Z3JleTtcbiAgY3Vyc29yOiBwb2ludGVyO1xufVxuXG4uYnV0dG9ucy1wZGYtZXhjZWwge1xuICB0ZXh0LWFsaWduOiByaWdodDtcbiAgbWFyZ2luLWJvdHRvbTogMWVtO1xuXG4gIC5idG4ge1xuICAgIHBhZGRpbmctbGVmdDogMmVtO1xuICAgIHBhZGRpbmctcmlnaHQ6IDJlbTtcbiAgfVxufVxuIl19 */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](ClientTableComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
@@ -2858,9 +2866,9 @@ ClientTableComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdef
             }]
     }], null, { clientList: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
-        }], removeObject: [{
-            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"]
         }], findOne: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"]
+        }], changeStatus: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"]
         }] }); })();
 
@@ -2960,14 +2968,6 @@ class ClientComponent {
             this.clientForm.formGroup.patchValue({ cpf: '' });
         });
     }
-    removeClient(client) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const response = yield this.clientService.remove(client.id);
-            response.subscribe(() => this.getClientList(), ({ error }) => {
-                console.error(error);
-            });
-        });
-    }
     updateClient(client) {
         this.clientService.update(client).subscribe((response) => {
             console.log('client updated');
@@ -2976,7 +2976,7 @@ class ClientComponent {
             this.getClientList();
         }, ({ error }) => {
             console.error(error.message);
-            alert(error.error_message);
+            alert('Was not possible update requested client. Please, check the form and try it again');
             this.clientForm.formGroup.patchValue({ cpf: '' });
         });
     }
@@ -2993,6 +2993,18 @@ class ClientComponent {
             }
         });
     }
+    changeStatus(client) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const response = yield this.clientService.changeStatus(client);
+            response.subscribe(() => {
+                this.clientForm.resetForm();
+                this.getClientList();
+            }, ({ error }) => {
+                console.error(error.message);
+                alert(error.error_message);
+            });
+        });
+    }
 }
 ClientComponent.ɵfac = function ClientComponent_Factory(t) { return new (t || ClientComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_client_service__WEBPACK_IMPORTED_MODULE_5__["ClientService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_shared_loading_loading_service__WEBPACK_IMPORTED_MODULE_3__["LoadingService"])); };
 ClientComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: ClientComponent, selectors: [["app-client"]], viewQuery: function ClientComponent_Query(rf, ctx) { if (rf & 1) {
@@ -3000,7 +3012,7 @@ ClientComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineCo
     } if (rf & 2) {
         var _t;
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵloadQuery"]()) && (ctx.clientForm = _t.first);
-    } }, decls: 5, vars: 2, consts: [[1, "container"], [3, "statusList", "createObject", "updateObject"], [3, "clientList", "removeObject", "findOne"]], template: function ClientComponent_Template(rf, ctx) { if (rf & 1) {
+    } }, decls: 5, vars: 2, consts: [[1, "container"], [3, "statusList", "createObject", "updateObject"], [3, "clientList", "changeStatus", "findOne"]], template: function ClientComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](0, "app-loading");
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](1, "app-header");
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](2, "div", 0);
@@ -3008,7 +3020,7 @@ ClientComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineCo
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("createObject", function ClientComponent_Template_app_client_form_createObject_3_listener($event) { return ctx.createClient($event); })("updateObject", function ClientComponent_Template_app_client_form_updateObject_3_listener($event) { return ctx.updateClient($event); });
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](4, "app-client-table", 2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("removeObject", function ClientComponent_Template_app_client_table_removeObject_4_listener($event) { return ctx.removeClient($event); })("findOne", function ClientComponent_Template_app_client_table_findOne_4_listener($event) { return ctx.findOne($event); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("changeStatus", function ClientComponent_Template_app_client_table_changeStatus_4_listener($event) { return ctx.changeStatus($event); })("findOne", function ClientComponent_Template_app_client_table_findOne_4_listener($event) { return ctx.findOne($event); });
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
     } if (rf & 2) {
@@ -3123,6 +3135,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/http.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _client_interfaces__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./client.interfaces */ "./src/app/client/client.interfaces.ts");
+
 
 
 
@@ -3155,6 +3169,22 @@ class ClientService {
             const deactivatedStatus = statusList.filter((status) => status.name === 'DEACTIVATED')[0];
             return this.httpClient.put(`${this.baseUrl}/${id}`, {
                 status: deactivatedStatus.id,
+            });
+        });
+    }
+    changeStatus(client) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const statusList = yield this.getStatusList().toPromise();
+            const deactivatedStatus = statusList.filter((status) => status.name === _client_interfaces__WEBPACK_IMPORTED_MODULE_4__["ClientStatusEnum"].DEACTIVATED.valueOf())[0];
+            const activatedStatus = statusList.filter((status) => status.name === _client_interfaces__WEBPACK_IMPORTED_MODULE_4__["ClientStatusEnum"].ACTIVATED.valueOf())[0];
+            if (client.status.name === activatedStatus.name) {
+                client.status = deactivatedStatus;
+            }
+            else {
+                client.status = activatedStatus;
+            }
+            return this.httpClient.put(`${this.baseUrl}/${client.id}`, {
+                status: client.status.id,
             });
         });
     }
@@ -5319,6 +5349,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+const _c0 = function (a0, a1) { return { "btn-danger": a0, "btn-success": a1 }; };
 function EmployeeTableComponent_tr_21_Template(rf, ctx) { if (rf & 1) {
     const _r3 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "tr");
@@ -5346,8 +5377,8 @@ function EmployeeTableComponent_tr_21_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](15, "Update ");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](16, "button", 8);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function EmployeeTableComponent_tr_21_Template_button_click_16_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r3); const employee_r1 = ctx.$implicit; const ctx_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](); return ctx_r4.removeButtonClicked(employee_r1); });
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](17, "Deactivate ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function EmployeeTableComponent_tr_21_Template_button_click_16_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r3); const employee_r1 = ctx.$implicit; const ctx_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](); return ctx_r4.changeStatusButtonClicked(employee_r1); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](17);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -5366,13 +5397,15 @@ function EmployeeTableComponent_tr_21_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"]((employee_r1.status == null ? null : employee_r1.status.name) || "");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("disabled", employee_r1.status.name === "DEACTIVATED");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction2"](8, _c0, employee_r1.status.name !== "DEACTIVATED", employee_r1.status.name === "DEACTIVATED"));
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("", employee_r1.status.name !== "DEACTIVATED" ? "Deactivate" : "Activate", " ");
 } }
 class EmployeeTableComponent {
     constructor() {
-        this.removeObject = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.findOne = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.startLoading = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        this.changeStatus = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.value = '';
         this.debounce = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
     }
@@ -5390,18 +5423,18 @@ class EmployeeTableComponent {
          */
         this.debounce.unsubscribe();
     }
-    removeButtonClicked(employee) {
-        this.removeObject.next(employee);
-    }
     updateButtonClicked(employee) {
         this.findOne.next(employee);
     }
     parseIsoToLocale(date) {
         return Object(src_app_common_dateFormatter__WEBPACK_IMPORTED_MODULE_2__["parseFromISOToLocaleDate"])(date);
     }
+    changeStatusButtonClicked(employee) {
+        this.changeStatus.next(employee);
+    }
 }
 EmployeeTableComponent.ɵfac = function EmployeeTableComponent_Factory(t) { return new (t || EmployeeTableComponent)(); };
-EmployeeTableComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: EmployeeTableComponent, selectors: [["app-employee-table"]], inputs: { employeeList: "employeeList" }, outputs: { removeObject: "removeObject", findOne: "findOne", startLoading: "startLoading" }, decls: 23, vars: 3, consts: [[1, "table", "table-responsive-lg"], [1, "thead-dark"], ["scope", "col"], ["scope", "col", 1, "d-none", "d-md-block"], [4, "ngFor", "ngForOf"], ["scope", "row"], [1, "d-none", "d-md-block"], [1, "btn", "btn-primary", "btn-block", 3, "click"], [1, "btn", "btn-danger", "btn-block", 3, "disabled", "click"]], template: function EmployeeTableComponent_Template(rf, ctx) { if (rf & 1) {
+EmployeeTableComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: EmployeeTableComponent, selectors: [["app-employee-table"]], inputs: { employeeList: "employeeList" }, outputs: { findOne: "findOne", startLoading: "startLoading", changeStatus: "changeStatus" }, decls: 23, vars: 3, consts: [[1, "table", "table-responsive-lg"], [1, "thead-dark"], ["scope", "col"], ["scope", "col", 1, "d-none", "d-md-block"], [4, "ngFor", "ngForOf"], ["scope", "row"], [1, "d-none", "d-md-block"], [1, "btn", "btn-primary", "btn-block", 3, "click"], [1, "btn", "btn-block", 3, "ngClass", "click"]], template: function EmployeeTableComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "section");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "h2");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "Employee list");
@@ -5433,7 +5466,7 @@ EmployeeTableComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵd
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](20, "tbody");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](21, EmployeeTableComponent_tr_21_Template, 18, 7, "tr", 4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](21, EmployeeTableComponent_tr_21_Template, 18, 11, "tr", 4);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](22, "async");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -5441,7 +5474,7 @@ EmployeeTableComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵd
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](21);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](22, 1, ctx.employeeList));
-    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["NgForOf"]], pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["AsyncPipe"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2VtcGxveWVlL2VtcGxveWVlLXRhYmxlL2VtcGxveWVlLXRhYmxlLmNvbXBvbmVudC5zY3NzIn0= */"] });
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["NgForOf"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["NgClass"]], pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["AsyncPipe"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2VtcGxveWVlL2VtcGxveWVlLXRhYmxlL2VtcGxveWVlLXRhYmxlLmNvbXBvbmVudC5zY3NzIn0= */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](EmployeeTableComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
@@ -5451,11 +5484,11 @@ EmployeeTableComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵd
             }]
     }], null, { employeeList: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
-        }], removeObject: [{
-            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"]
         }], findOne: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"]
         }], startLoading: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"]
+        }], changeStatus: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"]
         }] }); })();
 
@@ -5568,19 +5601,8 @@ class EmployeeComponent {
             this.getEmployeeList();
         }, ({ error }) => {
             console.error(error.message);
+            this.employeeForm.formGroup.patchValue({ email: '' });
             alert(error.error_message);
-        });
-    }
-    remove(employee) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const response = yield this.employeeService.remove(employee);
-            response
-                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["tap"])(() => this.loadingService.start()), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["finalize"])(() => this.loadingService.stop()))
-                .subscribe(({ message }) => {
-                this.getEmployeeList();
-            }, ({ error }) => {
-                console.error(error);
-            });
         });
     }
     update(employee) {
@@ -5590,7 +5612,7 @@ class EmployeeComponent {
         }, ({ error }) => {
             console.error(error);
             this.employeeForm.formGroup.patchValue({ email: '' });
-            alert(error.error_message);
+            alert('Was not possible update requested employee. Please, check the form and try again');
         });
     }
     findOne(employee) {
@@ -5609,6 +5631,18 @@ class EmployeeComponent {
             }
         });
     }
+    changeStatus(employee) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const response = yield this.employeeService.changeStatus(employee);
+            response.subscribe(() => {
+                this.employeeForm.resetForm();
+                this.getEmployeeList();
+            }, ({ error }) => {
+                console.error(error.message);
+                alert(error.error_message);
+            });
+        });
+    }
 }
 EmployeeComponent.ɵfac = function EmployeeComponent_Factory(t) { return new (t || EmployeeComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_employee_service__WEBPACK_IMPORTED_MODULE_3__["EmployeeService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_shared_loading_loading_service__WEBPACK_IMPORTED_MODULE_6__["LoadingService"])); };
 EmployeeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: EmployeeComponent, selectors: [["app-employee"]], viewQuery: function EmployeeComponent_Query(rf, ctx) { if (rf & 1) {
@@ -5616,7 +5650,7 @@ EmployeeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefine
     } if (rf & 2) {
         var _t;
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵloadQuery"]()) && (ctx.employeeForm = _t.first);
-    } }, decls: 5, vars: 4, consts: [[1, "container"], [3, "employeeStatusList", "employeeTitleList", "hrEmployeeList", "createEmployee", "updateEmployee"], [3, "employeeList", "removeObject", "findOne"]], template: function EmployeeComponent_Template(rf, ctx) { if (rf & 1) {
+    } }, decls: 5, vars: 4, consts: [[1, "container"], [3, "employeeStatusList", "employeeTitleList", "hrEmployeeList", "createEmployee", "updateEmployee"], [3, "employeeList", "changeStatus", "findOne"]], template: function EmployeeComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](0, "app-loading");
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](1, "app-header");
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](2, "div", 0);
@@ -5624,7 +5658,7 @@ EmployeeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefine
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("createEmployee", function EmployeeComponent_Template_app_employee_form_createEmployee_3_listener($event) { return ctx.create($event); })("updateEmployee", function EmployeeComponent_Template_app_employee_form_updateEmployee_3_listener($event) { return ctx.update($event); });
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](4, "app-employee-table", 2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("removeObject", function EmployeeComponent_Template_app_employee_table_removeObject_4_listener($event) { return ctx.remove($event); })("findOne", function EmployeeComponent_Template_app_employee_table_findOne_4_listener($event) { return ctx.findOne($event); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("changeStatus", function EmployeeComponent_Template_app_employee_table_changeStatus_4_listener($event) { return ctx.changeStatus($event); })("findOne", function EmployeeComponent_Template_app_employee_table_findOne_4_listener($event) { return ctx.findOne($event); });
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
     } if (rf & 2) {
@@ -5827,6 +5861,22 @@ class EmployeeService {
     }
     getOne(employeeId) {
         return this.httpClient.get(`${_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].BACKEND_ADDRESS}/employees/` + employeeId);
+    }
+    changeStatus(employee) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const statusList = yield this.getStatusList().toPromise();
+            const deactivatedStatus = statusList.filter((status) => status.name === 'DEACTIVATED')[0];
+            const activatedStatus = statusList.filter((status) => status.name === 'ACTIVATED')[0];
+            if (employee.status.name === activatedStatus.name) {
+                employee.status = deactivatedStatus;
+            }
+            else {
+                employee.status = activatedStatus;
+            }
+            return this.httpClient.put(`${_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].BACKEND_ADDRESS}/employees/` + employee.id, {
+                status: employee.status.id,
+            });
+        });
     }
 }
 EmployeeService.ɵfac = function EmployeeService_Factory(t) { return new (t || EmployeeService)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"])); };
