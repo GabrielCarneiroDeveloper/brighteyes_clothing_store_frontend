@@ -48,9 +48,13 @@ export class AuthComponent implements OnInit {
           this.router.navigate(['home']);
           this.loading = false;
         },
-        ({ error }: HttpErrorResponse) => {
-          alert('Credentials invalid or missing');
-          console.error(error.message);
+        ({ error, status }: HttpErrorResponse) => {
+          if (status === 401) {
+            alert(error.message);
+          } else {
+            alert('Credentials invalid or missing');
+          }
+          // console.error(error);
           this.loginForm.reset();
           this.loading = false;
         }
