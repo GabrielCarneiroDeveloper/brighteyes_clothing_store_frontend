@@ -65,7 +65,9 @@ export class ClientComponent implements OnInit {
       },
       ({ error }: HttpErrorResponse) => {
         console.error(error.message);
-        alert(error.error_message);
+        alert(
+          'Was not possible update requested client. Please, check the form and try it again'
+        );
         this.clientForm.formGroup.patchValue({ cpf: '' });
       }
     );
