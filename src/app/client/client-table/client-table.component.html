@@ -30,9 +30,11 @@
               </button>
               
               <button
-                (click)="removeButtonClicked(client)"
-                class="btn btn-danger btn-block"
-                [disabled]="client.status.name === 'DEACTIVATED'">Deactivate
+                (click)="changeStatusButtonClicked(client)"
+                [ngClass]='{ 
+                  "btn-danger": client.status.name !== "DEACTIVATED", 
+                  "btn-success": client.status.name === "DEACTIVATED" }'
+                class="btn btn-block">{{ client.status.name !== 'DEACTIVATED' ? 'Deactivate' : 'Activate'  }}
               </button>
             </td>
         </tr>

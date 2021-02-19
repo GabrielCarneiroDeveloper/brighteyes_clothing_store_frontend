@@ -9,6 +9,7 @@ import {
   Client,
   ClientCreateDTO,
   ClientStatus,
+  ClientStatusEnum,
   ClientUpdateDTO,
 } from './client.interfaces';
 
@@ -65,6 +66,32 @@ export class ClientService {
       `${this.baseUrl}/${id}`,
       {
         status: deactivatedStatus.id,
+      }
+    );
+  }
+
+  async changeStatus(
+    client: ClientUpdateDTO
+  ): Promise<Observable<UpdatedClientSuccessfullyResponse>> {
+    const statusList = await this.getStatusList().toPromise();
+
+    const deactivatedStatus = statusList.filter(
+      (status) => status.name === ClientStatusEnum.DEACTIVATED.valueOf()
+    )[0];
+    const activatedStatus = statusList.filter(
+      (status) => status.name === ClientStatusEnum.ACTIVATED.valueOf()
+    )[0];
+
+    if (client.status.name === activatedStatus.name) {
+      client.status = deactivatedStatus;
+    } else {
+      client.status = activatedStatus;
+    }
+
+    return this.httpClient.put<UpdatedClientSuccessfullyResponse>(
+      `${this.baseUrl}/${client.id}`,
+      {
+        status: client.status.id,
       }
     );
   }

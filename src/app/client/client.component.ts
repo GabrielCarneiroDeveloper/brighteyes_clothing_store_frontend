@@ -1,6 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { endsWith } from 'lodash';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { LoadingService } from '../shared/loading/loading.service';
@@ -91,5 +90,20 @@ export class ClientComponent implements OnInit {
     } catch (error) {
       console.error(error.message);
     }
+  }
+
+  async changeStatus(client: ClientUpdateDTO): Promise<void> {
+    const response = await this.clientService.changeStatus(client);
+
+    response.subscribe(
+      () => {
+        this.clientForm.resetForm();
+        this.getClientList();
+      },
+      ({ error }: HttpErrorResponse) => {
+        console.error(error.message);
+        alert(error.error_message);
+      }
+    );
   }
 }

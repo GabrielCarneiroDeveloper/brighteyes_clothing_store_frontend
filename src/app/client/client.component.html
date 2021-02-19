@@ -7,7 +7,7 @@
     [statusList]="clientStatusList$"
   ></app-client-form>
   <app-client-table
-    (removeObject)="removeClient($event)"
+    (changeStatus)='changeStatus($event)'
     (findOne)="findOne($event)"
     [clientList]="clientList$"
   ></app-client-table>
