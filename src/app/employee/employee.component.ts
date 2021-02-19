@@ -72,6 +72,7 @@ export class EmployeeComponent implements OnInit {
       },
       ({ error }: HttpErrorResponse) => {
         console.error(error.message);
+        this.employeeForm.formGroup.patchValue({ email: '' });
         alert(error.error_message);
       }
     );
@@ -86,7 +87,9 @@ export class EmployeeComponent implements OnInit {
       ({ error }: HttpErrorResponse) => {
         console.error(error);
         this.employeeForm.formGroup.patchValue({ email: '' });
-        alert(error.error_message);
+        alert(
+          'Was not possible update requested employee. Please, check the form and try again'
+        );
       }
     );
   }
