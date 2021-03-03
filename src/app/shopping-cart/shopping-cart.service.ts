@@ -103,36 +103,4 @@ export class ShoppingCartService {
       }
     );
   }
-
-  // getTitleList(): Observable<EmployeeTitle[]> {
-  //   try {
-  //     return this.httpClient.get<EmployeeTitle[]>(
-  //       `${environment.BACKEND_ADDRESS}/employee-title`
-  //     );
-  //   } catch (error) {
-  //     throw new Error(error.message);
-  //   }
-  // }
-
-  // async remove(
-  //   employee: EmployeeRemoveDTO
-  // ): Promise<Observable<UpdatedSuccessfullyResponse>> {
-  //   console.log(`try to remove employee "${employee.name}"`);
-  //   const statusList = await this.getStatusList().toPromise();
-  //   const deactivatedStatus = statusList.filter(
-  //     (status) => status.name === 'DEACTIVATED'
-  //   )[0];
-  //   return this.httpClient.put<UpdatedSuccessfullyResponse>(
-  //     `${environment.BACKEND_ADDRESS}/shopping-cart/` + employee.id,
-  //     {
-  //       status: deactivatedStatus.id,
-  //     }
-  //   );
-  // }
-
-  // getOne(employeeId: number): Observable<Employee> {
-  //   return this.httpClient.get<Employee>(
-  //     `${environment.BACKEND_ADDRESS}/shopping-cart/` + employeeId
-  //   );
-  // }
 }

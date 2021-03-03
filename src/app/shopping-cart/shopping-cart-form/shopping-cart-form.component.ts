@@ -40,7 +40,11 @@ export class ShoppingCartFormComponent implements OnInit {
 
     this.sellerEmployeeList = this.sellerEmployeeList.then((employees) =>
       employees.filter((employee) => {
-        if (employee.title.name === EmployeeTitleEnum.SELLER) return employee;
+        if (
+          employee.title.name === EmployeeTitleEnum.SELLER &&
+          employee.status.name === 'ACTIVATED'
+        )
+          return employee;
       })
     );
   }
