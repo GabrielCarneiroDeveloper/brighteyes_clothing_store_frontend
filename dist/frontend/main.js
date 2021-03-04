@@ -7854,7 +7854,8 @@ class ShoppingCartFormComponent {
             status: [2, [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]],
         });
         this.sellerEmployeeList = this.sellerEmployeeList.then((employees) => employees.filter((employee) => {
-            if (employee.title.name === src_app_employee_employee_enum__WEBPACK_IMPORTED_MODULE_3__["EmployeeTitleEnum"].SELLER)
+            if (employee.title.name === src_app_employee_employee_enum__WEBPACK_IMPORTED_MODULE_3__["EmployeeTitleEnum"].SELLER &&
+                employee.status.name === 'ACTIVATED')
                 return employee;
         }));
     }
