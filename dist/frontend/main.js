@@ -779,12 +779,7 @@ class AuthComponent {
             this.router.navigate(['home']);
             this.loading = false;
         }, ({ error, status }) => {
-            if (status === 401) {
-                alert(error.message);
-            }
-            else {
-                alert('Credentials invalid or missing');
-            }
+            alert('Error in user authentication');
             // console.error(error);
             this.loginForm.reset();
             this.loading = false;
@@ -4505,6 +4500,7 @@ class DashboardComponent {
     constructor(dashboardService) {
         this.dashboardService = dashboardService;
         this.showLoading = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+        this.stopLoading = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
     }
     ngOnInit() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
@@ -4512,36 +4508,48 @@ class DashboardComponent {
             this.statistics$ = this.dashboardService.getStatistics();
             const response = yield this.statistics$.toPromise();
             this.clothesAvailability = {
-                labels: response.clothes_availability_quantity.map(o => [o.status]),
-                values: response.clothes_availability_quantity.map(o => o.quantity)
+                labels: response.clothes_availability_quantity.map((o) => [o.status]),
+                values: response.clothes_availability_quantity.map((o) => o.quantity),
             };
             this.clientAvailabilityMetrics = {
-                labels: response.client_availability_quantity.map(o => [o.status]),
-                values: response.client_availability_quantity.map(o => o.quantity)
+                labels: response.client_availability_quantity.map((o) => [o.status]),
+                values: response.client_availability_quantity.map((o) => o.quantity),
             };
-            this.shoppingCarCreatedInCurrentMonth = response.number_of_shopping_carts_created_current_month;
-            this.clientCreatedInCurrentMonth = response.quantity_of_clients_registered_in_current_month;
+            this.shoppingCarCreatedInCurrentMonth =
+                response.number_of_shopping_carts_created_current_month;
+            this.clientCreatedInCurrentMonth =
+                response.quantity_of_clients_registered_in_current_month;
             this.clientRegisterMetrics = {
                 label: 'Quantity of clients',
-                data: response.client_registered_current_year_by_month.data
+                data: response.client_registered_current_year_by_month.data,
             };
-            // this.showLoading.emit(true)
+            this.stopLoading.emit();
         });
     }
     generatePdf() {
-        const div = document.getElementById("html2Pdf");
-        const options = { background: "white", height: div.clientHeight, width: div.clientWidth };
+        const div = document.getElementById('html2Pdf');
+        const options = {
+            background: 'white',
+            height: div.clientHeight,
+            width: div.clientWidth,
+        };
         html2canvas__WEBPACK_IMPORTED_MODULE_4___default()(div, options).then((canvas) => {
-            let doc = new jspdf__WEBPACK_IMPORTED_MODULE_3__["jsPDF"]("p", "mm", "a4");
-            let imgData = canvas.toDataURL("image/PNG");
-            doc.addImage({ imageData: imgData, x: 20, y: 0, width: 170, height: 270 });
+            let doc = new jspdf__WEBPACK_IMPORTED_MODULE_3__["jsPDF"]('p', 'mm', 'a4');
+            let imgData = canvas.toDataURL('image/PNG');
+            doc.addImage({
+                imageData: imgData,
+                x: 20,
+                y: 0,
+                width: 170,
+                height: 270,
+            });
             let pdfOutput = doc.output();
             let buffer = new ArrayBuffer(pdfOutput.length);
             let array = new Uint8Array(buffer);
             for (let i = 0; i < pdfOutput.length; i++) {
                 array[i] = pdfOutput.charCodeAt(i);
             }
-            const fileName = "example.pdf";
+            const fileName = 'example.pdf';
             doc.save(fileName);
         });
     }
@@ -4552,7 +4560,7 @@ class DashboardComponent {
     }
 }
 DashboardComponent.ɵfac = function DashboardComponent_Factory(t) { return new (t || DashboardComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_dashboard_service__WEBPACK_IMPORTED_MODULE_2__["DashboardService"])); };
-DashboardComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: DashboardComponent, selectors: [["app-dashboard"]], outputs: { showLoading: "showLoading" }, decls: 34, vars: 6, consts: [["id", "dashboard"], [1, "btn-group", "mb-4"], [1, "btn", "btn-success", 3, "href", "click"], [1, "btn", "btn-danger", 3, "click"], ["id", "html2Pdf"], [1, "row", "mt-5"], ["class", "col-md-6", "title", "Clothes availability", 3, "labels", "values", 4, "ngIf"], ["class", "col-md-6", "title", "Client availability", 3, "labels", "values", 4, "ngIf"], [1, "mt-5"], ["title", "Clients registered in current year", 3, "input", 4, "ngIf"], ["id", "rankings"], [1, "row"], [1, "col-md-6"], ["id", "title"], [1, "client-ranking"], [1, "ranked", "client__firstly"], [1, "value"], ["title", "Clothes availability", 1, "col-md-6", 3, "labels", "values"], ["title", "Client availability", 1, "col-md-6", 3, "labels", "values"], ["title", "Clients registered in current year", 3, "input"]], template: function DashboardComponent_Template(rf, ctx) { if (rf & 1) {
+DashboardComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: DashboardComponent, selectors: [["app-dashboard"]], outputs: { showLoading: "showLoading", stopLoading: "stopLoading" }, decls: 34, vars: 6, consts: [["id", "dashboard"], [1, "btn-group", "mb-4"], [1, "btn", "btn-success", 3, "href", "click"], [1, "btn", "btn-danger", 3, "click"], ["id", "html2Pdf"], [1, "row", "mt-5"], ["class", "col-md-6", "title", "Clothes availability", 3, "labels", "values", 4, "ngIf"], ["class", "col-md-6", "title", "Client availability", 3, "labels", "values", 4, "ngIf"], [1, "mt-5"], ["title", "Clients registered in current year", 3, "input", 4, "ngIf"], ["id", "rankings"], [1, "row"], [1, "col-md-6"], ["id", "title"], [1, "client-ranking"], [1, "ranked", "client__firstly"], [1, "value"], ["title", "Clothes availability", 1, "col-md-6", 3, "labels", "values"], ["title", "Client availability", 1, "col-md-6", 3, "labels", "values"], ["title", "Clients registered in current year", 3, "input"]], template: function DashboardComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "section", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](2, "a", 2);
@@ -4628,9 +4636,11 @@ DashboardComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefin
         args: [{
                 selector: 'app-dashboard',
                 templateUrl: './dashboard.component.html',
-                styleUrls: ['./dashboard.component.scss']
+                styleUrls: ['./dashboard.component.scss'],
             }]
     }], function () { return [{ type: _dashboard_service__WEBPACK_IMPORTED_MODULE_2__["DashboardService"] }]; }, { showLoading: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"]
+        }], stopLoading: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"]
         }] }); })();
 
@@ -6030,7 +6040,10 @@ function HomeComponent_a_10_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("routerLink", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction0"](1, _c4));
 } }
 function HomeComponent_app_dashboard_19_Template(rf, ctx) { if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "app-dashboard");
+    const _r7 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "app-dashboard", 10);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("stopLoading", function HomeComponent_app_dashboard_19_Template_app_dashboard_stopLoading_0_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r7); const ctx_r6 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](); return ctx_r6.stopLoading(); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } }
 class HomeComponent {
     constructor(sessionService, loadingService) {
@@ -6043,11 +6056,13 @@ class HomeComponent {
             e.preventDefault();
             jquery__WEBPACK_IMPORTED_MODULE_2__('#wrapper').toggleClass('toggled');
         });
+    }
+    stopLoading() {
         this.loadingService.stop();
     }
 }
 HomeComponent.ɵfac = function HomeComponent_Factory(t) { return new (t || HomeComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_common_services_session_service__WEBPACK_IMPORTED_MODULE_1__["SessionService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_loading_loading_service__WEBPACK_IMPORTED_MODULE_3__["LoadingService"])); };
-HomeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: HomeComponent, selectors: [["app-home"]], decls: 20, vars: 6, consts: [["id", "wrapper", 1, "d-flex"], ["id", "sidebar-wrapper", 1, "bg-light", "border-right"], [1, "sidebar-heading"], [1, "list-group", "list-group-flush"], ["href", "#", "class", "list-group-item list-group-item-action bg-light", 3, "routerLink", 4, "ngIf"], ["id", "page-content-wrapper"], [1, "container"], ["id", "welcome-message", 2, "margin-top", "2em"], [4, "ngIf"], ["href", "#", 1, "list-group-item", "list-group-item-action", "bg-light", 3, "routerLink"]], template: function HomeComponent_Template(rf, ctx) { if (rf & 1) {
+HomeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: HomeComponent, selectors: [["app-home"]], decls: 20, vars: 6, consts: [["id", "wrapper", 1, "d-flex"], ["id", "sidebar-wrapper", 1, "bg-light", "border-right"], [1, "sidebar-heading"], [1, "list-group", "list-group-flush"], ["href", "#", "class", "list-group-item list-group-item-action bg-light", 3, "routerLink", 4, "ngIf"], ["id", "page-content-wrapper"], [1, "container"], ["id", "welcome-message", 2, "margin-top", "2em"], [3, "stopLoading", 4, "ngIf"], ["href", "#", 1, "list-group-item", "list-group-item-action", "bg-light", 3, "routerLink"], [3, "stopLoading"]], template: function HomeComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "app-loading");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 1);
