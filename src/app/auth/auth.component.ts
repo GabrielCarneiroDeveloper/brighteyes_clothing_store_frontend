@@ -49,11 +49,7 @@ export class AuthComponent implements OnInit {
           this.loading = false;
         },
         ({ error, status }: HttpErrorResponse) => {
-          if (status === 401) {
-            alert(error.message);
-          } else {
-            alert('Credentials invalid or missing');
-          }
+          alert('Error in user authentication');
           // console.error(error);
           this.loginForm.reset();
           this.loading = false;
