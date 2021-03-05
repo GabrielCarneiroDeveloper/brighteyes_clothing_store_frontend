@@ -27,7 +27,9 @@ export class HomeComponent implements OnInit {
       e.preventDefault();
       $('#wrapper').toggleClass('toggled');
     });
+  }
 
+  stopLoading() {
     this.loadingService.stop();
   }
 }

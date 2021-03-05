@@ -43,7 +43,9 @@
 				<h1>Welcome!</h1>
 				<span>Bright Eyes Clothing Store</span>
 			</div>
-			<app-dashboard *ngIf='session.title === "Admin"'></app-dashboard>
+			<app-dashboard 
+				*ngIf='session.title === "Admin"'
+				(stopLoading)='stopLoading()'></app-dashboard>
 		<!-- <router-outlet></router-outlet> -->
 	  	</div>
   	</div>
